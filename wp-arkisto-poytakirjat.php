@@ -72,18 +72,18 @@ function wpark_pk_register_taxonomy() {
     $labels = array(
         'name'                       => $plural,
         'singular_name'              => $singular,
-        'search_items'               => 'Etsi ' . $plural,
-        'popular_items'              => 'Suositus ' . $plural,
-        'all_items'                  => 'kaikki ' . $plural,
+        'search_items'               => 'Etsi vuotta',
+        'popular_items'              => 'Suositut vuodet',
+        'all_items'                  => 'Kaikki vuodet',
         'parent_item'                => null,
         'parent_item_colon'          => null,
-        'edit_item'                  => 'Muokkaa ' . $singular,
+        'edit_item'                  => 'Muokkaa vuotta',
         'update_item'                => 'Päivitä ' . $singular,
         'add_new_item'               => 'Lisää uusi ' . $singular,
-        'new_item_name'              => 'Uusi ' . $singular . ' Name',
-        'separate_items_with_commas' => 'Erottele ' . $plural . ' with commas',
-        'add_or_remove_items'        => 'Lisää tai poista ' . $plural,
-        'choose_from_most_used'      => 'Valitse suosituimmista ' . $plural,
+        'new_item_name'              => 'Nimeä ' . $singular,
+        'separate_items_with_commas' => 'Erottele ' . $plural . ' pilkuilla',
+        'add_or_remove_items'        => 'Lisää tai poista vuosia',
+        'choose_from_most_used'      => 'Valitse suosituimmista vuosista',
         'not_found'                  => 'Vuotta ei löytynyt.',
         'menu_name'                  => $plural,
     );
@@ -119,15 +119,17 @@ add_action('add_meta_boxes', 'wpark_pk_add_metabox');
 
 
 /* Lisäyssivun html:n generointi */
-function wpark_pk_callback() {
-?>
+function wpark_pk_callback( $post ) {
+    wp_nonce_field( basename( __FILE__  ), 'wpark_pk_nonce' );
+    $wpark_pk_stored_meta = get_post_meta( $post->ID );   
+    ?>
 
 <div class="meta-row">
     <div class="meta-th">
         <label for="pk-tyyppi" class="pk-row-title">Tyyppi (hallitus/yhdistys/toimikunta)</label>
     </div>
     <div class="meta-td">
-        <input type="text" name="pk-tyyppi" id="pk-tyyppi" value=""/>
+    <input type="text" name="pk_tyyppi" id="pk-tyyppi" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_tyyppi'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_tyyppi'][0]  ); ?>"/>
     </div>
 </div>
 
@@ -136,7 +138,7 @@ function wpark_pk_callback() {
         <label for="pk-numero" class="pk-row-title">Järjestysnumero</label>
     </div>
     <div class="meta-td">
-        <input type="text" name="pk-numero" id="pk-numero" value=""/>
+        <input type="text" name="pk_numero" id="pk-numero" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_numero'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_numero'][0]  ); ?>"/>
     </div>
 </div>
 
@@ -145,7 +147,7 @@ function wpark_pk_callback() {
         <label for="pk-paivamaara" class="pk-row-title">Päivämäärä</label>
     </div>
     <div class="meta-td">
-        <input type="text" name="pk-paivamaara" id="pk-paivamaara" value=""/>
+        <input type="text" name="pk_paivamaara" id="pk-paivamaara" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_paivamaara'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_paivamaara'][0]  ); ?>"/>
     </div>
 </div>
 <div class="meta">
@@ -168,5 +170,26 @@ function wpark_pk_callback() {
 
 <?php
 }
+
+function wpark_pk_meta_save( $post_id ) {
+    $is_autosave = wp_is_post_autosave( $post_id  );
+    $is_revision = wp_is_post_revision( $post_id  );
+    $is_valid_nonce = ( isset ( $_POST[ 'wpark_pk_nonce' ] ) && wp_verify_nonce( $_POST[ 'wpark_pk_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
+
+    if ( $is_autosave || $is_revision || !$is_valid_nonce ) {
+        return;
+    }
+    if ( isset ( $_POST[ 'pk_tyyppi' ] ) ) {
+        update_post_meta( $post_id, 'pk_tyyppi', sanitize_text_field( $_POST[ 'pk_tyyppi' ] ) );
+    }
+    if ( isset ( $_POST[ 'pk_numero' ] ) ) {
+        update_post_meta( $post_id, 'pk_numero', sanitize_text_field( $_POST[ 'pk_numero' ] ) );
+    }
+    if ( isset ( $_POST[ 'pk_paivamaara' ] ) ) {
+        update_post_meta( $post_id, 'pk_paivamaara', sanitize_text_field( $_POST[ 'pk_paivamaara' ] ) );
+    }
+}
+
+add_action( 'save_post', 'wpark_pk_meta_save' );
 
 ?>
