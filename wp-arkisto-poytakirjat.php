@@ -188,8 +188,29 @@ function wpark_pk_meta_save( $post_id ) {
     if ( isset ( $_POST[ 'pk_paivamaara' ] ) ) {
         update_post_meta( $post_id, 'pk_paivamaara', sanitize_text_field( $_POST[ 'pk_paivamaara' ] ) );
     }
+    if ( isset ( $_POST[ 'poytakirja' ] ) ) {
+        update_post_meta( $post_id, 'poytakirja', sanitize_text_field( $_POST[ 'poytakirja' ] ) );
+    }
 }
 
 add_action( 'save_post', 'wpark_pk_meta_save' );
+/*
+function wpark_load_template() {
 
+    if (get_query_var( 'post_type') != 'poytakirja' ) {
+        return;
+    }
+    if ( is_archive() || is_search() ) {
+            
+        if ( file_exist( get_stylesheet_directory(). '/poytakirjat.php' ) ) {
+            return get_stylesheet_directory() . '/poytakirjat.php';
+        }
+        else {
+            return plugin_dir_parh(__FILE__) . 'templates/poytakirjat.php'
+        }
+    }
+}
+
+add_action( 'template_include', 'wpark_load_template' );
+ */
 ?>
