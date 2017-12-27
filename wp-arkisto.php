@@ -2,9 +2,11 @@
 /**
  * Plugin Name: WP-Arkisto
  * Description: Työkalu dokumenttien hallintaan
+ * Plugin URI: https://asteriski.fi
  * Author: Maks Turtiainen
- * Version: 0.0.1
- * License: MIT
+ * Version: 0.0.2
+ * Author URI: https://asteriski.fi
+ * License: BSD
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
