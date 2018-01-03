@@ -15,7 +15,10 @@
 
 <div id="pk">
 <div id="pk-dropdown">
-
+<?php
+global $wp;
+$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request  )  );
+?>
 <li id="pk-dropdown-li">
     <?php wp_dropdown_categories( 'show_option_none=Valitse vuosi&taxonomy=vuosi&value_field=slug'  ); ?>
         <script type="text/javascript">
@@ -23,7 +26,7 @@
             var dropdown = document.getElementById("cat");
             function onCatChange() {
                 if ( dropdown.options[dropdown.selectedIndex].value > 0  ) {
-                location.href = "<?php echo esc_url( get_permalink()); ?>?vuosi="+dropdown.options[dropdown.selectedIndex].value;
+                    location.href = "<?php  $current_url ?>?vuosi="+dropdown.options[dropdown.selectedIndex].value;
                 }
             }
         dropdown.onchange = onCatChange;
@@ -41,27 +44,29 @@
                     array(
                         'taxonomy' => 'vuosi',
                         'field' => 'slug',
-                        'terms' => htmlspecialchars($_GET["vuosi"]),
+                        'terms' => htmlspecialchars(isset($_GET["vuosi"]) ? $_GET['vuosi'] : null),
                     ),
             ),
     );
 
     /* Loop joka hakee poytakirjat */
-    /*$pkvuosittain = new WP_Query( array( 'post_type' => 'poytakirjat' ) );
-     */$pkvuosittain = new WP_Query( $args );
+    $pkvuosittain = new WP_Query( $args );
     if ( $pkvuosittain-> have_posts() ) :
         echo '<div id="jobs-by-location">';
-    	/* echo '<h4>' . esc_html__( $atts[ 'title' ] ) . '&nbsp' . esc_html__( ucwords( $location ) ) . '</h4>';
-         */
         echo '<ul>';	
         while ( $pkvuosittain->have_posts() ) : $pkvuosittain->the_post();
         	global $post;
         	$title = get_the_title();
         	$slug = get_permalink();
-            $tiedot = var_dump(get_post_meta($post));
+            $pm = get_post_meta( $post->ID, 'pk_paivamaara', true );
+            $jn = get_post_meta( $post->ID, 'pk_numero', true );
+            $tyyppi = get_post_meta( $post->ID, 'pk_tyyppi', true );
         	echo '<li class="job-listing">';
             echo '<li><a href="' . $slug . '">' . $title . '</a>';
-            echo '<span>' . esc_html( $tiedot ) . '</span>';
+            echo '<span> ' . $pm  . '</span>';
+            echo '<span> ' . $jn  . '</span>';
+            echo '<span> ' . $tyyppi  . '</span>';
+
             echo '</li>';
         endwhile;
     echo '</ul>';
