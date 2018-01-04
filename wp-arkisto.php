@@ -17,5 +17,17 @@ require_once (plugin_dir_path(__FILE__) . 'wp-arkisto-poytakirjat.php' );
 require_once (plugin_dir_path(__FILE__) . 'wp-arkisto-tentit.php' );
 require_once (plugin_dir_path(__FILE__) . 'wp-arkisto-shortcodes.php' );
 
+function wpark_admin_enqueue_scripts() {
+    global $pagenow, $typenow;
+
+    if ( ( $pagenow == 'post.php' || $pagenow == 'post-new.php' ) && $typenow == 'poytakirjat' ) {
+        wp_enqueue_style( 'wpark-admin-css', plugins_url( 'css/admin-poytakirjat.css', __FILE__ ) );
+        wp_enqueue_script( 'wpark-admin-js', plugins_url( 'js/admin-poytakirjat.js', __FILE__ ), array( 'jquery', 'jquery-ui-datepicker' ), '20180104', true );
+        wp_enqueue_style( 'jquery-style', plugins_url( 'assets/jquery-ui-theme-asteriski/jquery-ui.css', __FILE__ ) );
+    }
+
+}
+
+add_action( 'admin_enqueue_scripts', 'wpark_admin_enqueue_scripts' );
 
 ?>

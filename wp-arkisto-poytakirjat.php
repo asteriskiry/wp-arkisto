@@ -15,14 +15,14 @@ function wpark_pk_register_post_type() {
         'add_name'              => 'Lisää uusi',
         'add_new_item'          => 'Lisää uusi ' . $singular,
         'edit'                  => 'Muokkaa',
-        'edit_item'             => 'Muokkaa ' . $singular,
+        'edit_item'             => 'Muokkaa pöytäkirjaa',
         'new_item'              => 'Uusi ' . $singular,
         'view'                  => 'Näytä ' . $singular,
         'view_item'             => 'Näytä ' . $singular,
-        'search_term'           => 'Etsi ' . $plural,
+        'search_term'           => 'Etsi pöytäkirjaa',
         'parent'                => 'Vanhempi ' . $singular,
-        'not_found'             => $plural . ' ei löydy',
-        'not_found_in_trash'    => $plural . ' ei löydy roskakorista'
+        'not_found'             => 'Pöytäkirjaa ei löydy',
+        'not_found_in_trash'    => 'Pöytäkirjaa ei löydy roskakorista'
     );
 
     $args = array(
@@ -63,14 +63,14 @@ add_action( 'init', 'wpark_pk_register_post_type' );
 
 
 /* Custom taxonomyn "Vuodet" rekisteröinti pöyräkirjoille */
-function wpark_pk_register_taxonomy() {
+function wpark_pk_register_taxonomy_vuosi() {
 
     $plural = 'Vuodet';
     $singular = 'Vuosi';
     $slug = 'vuosi';
 
     $labels = array(
-        'name'                       => $plural,
+        'name'                       => $singular,
         'singular_name'              => $singular,
         'search_items'               => 'Etsi vuotta',
         'popular_items'              => 'Suositut vuodet',
@@ -99,7 +99,47 @@ function wpark_pk_register_taxonomy() {
     ); 
     register_taxonomy( 'vuosi', 'poytakirjat', $args );
 }
-add_action('init', 'wpark_pk_register_taxonomy');
+add_action('init', 'wpark_pk_register_taxonomy_vuosi');
+
+/* Custom taxonomyn "Tyyppi" rekisteröinti pöyräkirjoille */
+function wpark_pk_register_taxonomy_tyyppi() {
+
+    $plural = 'Tyypit';
+    $singular = 'Tyyppi';
+    $slug = 'tyyppi';
+
+    $labels = array(
+        'name'                       => $singular,
+        'singular_name'              => $singular,
+        'search_items'               => 'Etsi tyyppiä',
+        'popular_items'              => 'Suositut tyypit',
+        'all_items'                  => 'Kaikki tyypit',
+        'parent_item'                => null,
+        'parent_item_colon'          => null,
+        'edit_item'                  => 'Muokkaa tyyppiä',
+        'update_item'                => 'Päivitä ' . $singular,
+        'add_new_item'               => 'Lisää uusi ' . $singular,
+        'new_item_name'              => 'Nimeä ' . $singular,
+        'separate_items_with_commas' => 'Erottele ' . $plural . ' pilkuilla',
+        'add_or_remove_items'        => 'Lisää tai poista tyyppejä',
+        'choose_from_most_used'      => 'Valitse suosituimmista tyypeistä',
+        'not_found'                  => 'Tyyppejä ei löytynyt.',
+        'menu_name'                  => $plural,
+    );
+    
+    $args = array(
+            'hierarchical'          => true,
+            'labels'                => $labels,
+            'show_ui'               => true,
+            'show_admin_column'     => true,
+            'update_count_callback' => '_update_post_term_count',
+            'query_var'             => true,
+            //'rewrite'               => array( 'slug' => $$slug ),
+    ); 
+    register_taxonomy( 'tyyppi', 'poytakirjat', $args );
+}
+add_action('init', 'wpark_pk_register_taxonomy_tyyppi');
+
 
 /* Pöytäkirjojen lisäyssivun metaboxi */
 
@@ -129,7 +169,7 @@ function wpark_pk_callback( $post ) {
         <label for="pk-tyyppi" class="pk-row-title">Tyyppi (hallitus/yhdistys/toimikunta)</label>
     </div>
     <div class="meta-td">
-    <input type="text" name="pk_tyyppi" id="pk-tyyppi" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_tyyppi'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_tyyppi'][0]  ); ?>"/>
+    <input type="text" class="pk-row-content"name="pk_tyyppi" id="pk-tyyppi" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_tyyppi'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_tyyppi'][0]  ); ?>"/>
     </div>
 </div>
 
@@ -138,16 +178,16 @@ function wpark_pk_callback( $post ) {
         <label for="pk-numero" class="pk-row-title">Järjestysnumero</label>
     </div>
     <div class="meta-td">
-        <input type="text" name="pk_numero" id="pk-numero" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_numero'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_numero'][0]  ); ?>"/>
+        <input type="text" class="pk-row-content" name="pk_numero" id="pk-numero" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_numero'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_numero'][0]  ); ?>"/>
     </div>
 </div>
 
 <div class="meta-row">
     <div class="meta-th">
-        <label for="pk-paivamaara" class="pk-row-title">Päivämäärä</label>
+        <label for="pk-paivamaara" class="pk-row-title">Kokouksen päivämäärä</label>
     </div>
     <div class="meta-td">
-        <input type="text" name="pk_paivamaara" id="pk-paivamaara" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_paivamaara'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_paivamaara'][0]  ); ?>"/>
+        <input type="text" class="pk-row-content datepicker" size=10 name="pk_paivamaara" id="pk-paivamaara" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_paivamaara'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_paivamaara'][0]  ); ?>"/>
     </div>
 </div>
 <div class="meta">

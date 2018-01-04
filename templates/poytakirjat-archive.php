@@ -39,14 +39,14 @@ $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request  )  
 <?php
 /* Parametrit Loopille */
     $args = array(
-            'post_type' 		=> 'poytakirjat',
-            'tax_query' 		=> array(
-                    array(
-                        'taxonomy' => 'vuosi',
-                        'field' => 'slug',
-                        'terms' => htmlspecialchars(isset($_GET["vuosi"]) ? $_GET['vuosi'] : null),
-                    ),
+        'post_type' 		=> 'poytakirjat',
+        'tax_query' 		=> array(
+        array(
+            'taxonomy' => 'vuosi',
+            'field' => 'slug',
+            'terms' => htmlspecialchars(isset($_GET["vuosi"]) ? $_GET['vuosi'] : null),
             ),
+        ),
     );
 
     /* Loop joka hakee poytakirjat */
@@ -74,13 +74,13 @@ $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request  )  
 endif;
 ?>
 
-</div>
+    </div>
 </div>
 
 <?php
-	/**
-	 * travelify_after_main_container hook
-	 */
+    /**
+    * travelify_after_main_container hook
+    */
 	do_action( 'travelify_after_main_container' );
 ?>
 
