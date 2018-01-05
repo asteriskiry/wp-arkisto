@@ -52,25 +52,29 @@ $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request  )  
     /* Loop joka hakee poytakirjat */
     $pkvuosittain = new WP_Query( $args );
     if ( $pkvuosittain-> have_posts() ) :
-        echo '<div id="jobs-by-location">';
-        echo '<ul>';	
+        echo '<table id="pk-taulukko">';
+        echo '<tr class="pk-rivi">';	
+        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(1)\')">Nimi <i class="fa fa-sort" style="font-size:13px;"></i></th>';
+        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(2)\')">Järjestysnumero <i class="fa fa-sort" style="font-size:13px;"></i></th>';
+        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(3)\')">Päivämäärä <i class="fa fa-sort" style="font-size:13px;"></i></th>';
+        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(4)\')">Tyyppi <i class="fa fa-sort" style="font-size:13px;"></i></th>';
+        echo '</tr>';
         while ( $pkvuosittain->have_posts() ) : $pkvuosittain->the_post();
         	global $post;
         	$title = get_the_title();
         	$slug = get_permalink();
             $pm = get_post_meta( $post->ID, 'pk_paivamaara', true );
             $jn = get_post_meta( $post->ID, 'pk_numero', true );
-            $tyyppi = get_post_meta( $post->ID, 'pk_tyyppi', true );
-        	echo '<li class="job-listing">';
-            echo '<li><a href="' . $slug . '">' . $title . '</a>';
-            echo '<span> ' . $pm  . '</span>';
-            echo '<span> ' . $jn  . '</span>';
-            echo '<span> ' . $tyyppi  . '</span>';
-
-            echo '</li>';
+            $tyyppi = get_the_terms( $post->ID, 'tyyppi' );
+        	echo '<tr class="item">';
+            echo '<td><a href="' . $slug . '">' . $title . '</a></td>';
+            echo '<td> ' . $jn  . '</td>';
+            echo '<td> ' . $pm  . '</td>';
+            echo '<td> ' . $tyyppi[0]->name  . '</td>';
+            echo '</tr>';
         endwhile;
-    echo '</ul>';
-    echo '</div>';
+    echo '</table>';
+    //echo '</div>';
 endif;
 ?>
 

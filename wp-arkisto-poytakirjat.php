@@ -166,19 +166,10 @@ function wpark_pk_callback( $post ) {
 
 <div class="meta-row">
     <div class="meta-th">
-        <label for="pk-tyyppi" class="pk-row-title">Tyyppi (hallitus/yhdistys/toimikunta)</label>
-    </div>
-    <div class="meta-td">
-    <input type="text" class="pk-row-content"name="pk_tyyppi" id="pk-tyyppi" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_tyyppi'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_tyyppi'][0]  ); ?>"/>
-    </div>
-</div>
-
-<div class="meta-row">
-    <div class="meta-th">
         <label for="pk-numero" class="pk-row-title">Järjestysnumero</label>
     </div>
     <div class="meta-td">
-        <input type="text" class="pk-row-content" name="pk_numero" id="pk-numero" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_numero'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_numero'][0]  ); ?>"/>
+        <input type="text" class="pk-row-content" size=10 name="pk_numero" id="pk-numero" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_numero'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_numero'][0]  ); ?>"/>
     </div>
 </div>
 
@@ -211,6 +202,16 @@ function wpark_pk_callback( $post ) {
 <?php
 }
 
+function wpark_pk_change_default_title( $title  ){
+    $screen = get_current_screen(); 
+    if  ( 'poytakirjat' == $screen->post_type  ) {
+        $title = 'Esim. Pöytäkirja';             
+    } 
+    return $title;
+}
+
+add_filter( 'enter_title_here', 'wpark_pk_change_default_title'  );
+
 function wpark_pk_meta_save( $post_id ) {
     $is_autosave = wp_is_post_autosave( $post_id  );
     $is_revision = wp_is_post_revision( $post_id  );
@@ -218,9 +219,6 @@ function wpark_pk_meta_save( $post_id ) {
 
     if ( $is_autosave || $is_revision || !$is_valid_nonce ) {
         return;
-    }
-    if ( isset ( $_POST[ 'pk_tyyppi' ] ) ) {
-        update_post_meta( $post_id, 'pk_tyyppi', sanitize_text_field( $_POST[ 'pk_tyyppi' ] ) );
     }
     if ( isset ( $_POST[ 'pk_numero' ] ) ) {
         update_post_meta( $post_id, 'pk_numero', sanitize_text_field( $_POST[ 'pk_numero' ] ) );

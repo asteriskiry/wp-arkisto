@@ -1,0 +1,12 @@
+.pk-indeksit {
+    background-color: #2c8f43 !important;
+    color: #fccb16;
+}
+.pk-indeksit:hover {
+    background-color: #247c39 !important;
+    color: #fccb16;
+}
+#pk-dropdown-li {
+    list-style-type: none;
+    margin-bottom: 10px;
+}
