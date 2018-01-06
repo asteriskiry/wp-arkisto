@@ -1,6 +1,31 @@
 <?php
 
-/* Pöytäkirjojen admin-puoli */
+/* Pöytäkirjat */
+
+/* Tyylien ja javascriptin lataus admin-sivuille */
+function wpark_admin_enqueue_scripts() {
+    global $pagenow, $typenow;
+
+    if ( ( $pagenow == 'post.php' || $pagenow == 'post-new.php' ) && $typenow == 'poytakirjat' ) {
+        wp_enqueue_media(); 
+        wp_enqueue_style( 'wpark-admin-css', plugins_url( 'css/admin-poytakirjat.css', __FILE__ ) );
+        wp_enqueue_script( 'wpark-admin-js', plugins_url( 'js/admin-poytakirjat.js', __FILE__ ), array( 'jquery', 'jquery-ui-datepicker', 'media-upload' ), true );
+        wp_enqueue_style( 'jquery-style', plugins_url( 'assets/jquery-ui-theme-asteriski/jquery-ui.css', __FILE__ ) );
+    }
+
+}
+
+add_action( 'admin_enqueue_scripts', 'wpark_admin_enqueue_scripts' );
+
+/* Tyylien ja javascriptin lataus fronttiin */
+function wpark_front_enqueue_scripts() {
+    
+    wp_enqueue_style( 'wpark-front-css', plugins_url( 'css/front-poytakirjat.css', __FILE__ ) );
+    wp_enqueue_style( 'hover-master-css', plugins_url( 'assets/hover.css', __FILE__ ) );
+    wp_enqueue_script( 'w3js', plugins_url( 'assets/w3.js', __FILE__ ),  true );
+    wp_enqueue_script( 'font-awesome', plugins_url( 'assets/fontawesome-all.js', __FILE__ ),  true );
+}
+add_action( 'wp_enqueue_scripts', 'wpark_front_enqueue_scripts' );
 
 /* Custom post type "Pöytäkirjat" rekisteröinti */
 function wpark_pk_register_post_type() {
@@ -202,6 +227,31 @@ function wpark_pk_callback( $post ) {
 <?php
 }
 
+/* PDF-uploaderi */
+function wpark_pk_add_uploader() {
+    add_meta_box(
+        'pdf_metabox', 
+        'Pöytäkirjan lataus',
+        'wpark_pk_add_uploader_callback',
+        'poytakirjat' 
+    );
+}
+add_action( 'add_meta_boxes', 'wpark_pk_add_uploader' );
+
+function wpark_pk_add_uploader_callback( $post_id ) {
+    ?>
+
+    <div id="metabox_wrapper">
+        <img id="pdf-tag">
+        <input type="hidden" id="pdf-hidden-field" name="custom_pdf_data">
+        <input type="button" id="pdf-upload-button" class="button" value="Lisää pöytäkirja">
+        <input type="button" id="pdf-delete-button" class="button" value="Poista pöytäkirja">
+    </div>
+
+    <?php
+}
+
+/* Otsikko-kentän placeholderin vaihto */
 function wpark_pk_change_default_title( $title  ){
     $screen = get_current_screen(); 
     if  ( 'poytakirjat' == $screen->post_type  ) {
@@ -212,6 +262,7 @@ function wpark_pk_change_default_title( $title  ){
 
 add_filter( 'enter_title_here', 'wpark_pk_change_default_title'  );
 
+/* Metatietojen tallennus */
 function wpark_pk_meta_save( $post_id ) {
     $is_autosave = wp_is_post_autosave( $post_id  );
     $is_revision = wp_is_post_revision( $post_id  );

@@ -1,6 +1,7 @@
 <?php 
 /*
-* Template Name: Pöytäkirjat
+ * Template Name: Pöytäkirjat-archive
+ * Näytetään silloin kun ollaan custom post type "Pöytäkirjat" archive-sivulla
 * */
 ?>
 
@@ -52,12 +53,13 @@ $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request  )  
     /* Loop joka hakee poytakirjat */
     $pkvuosittain = new WP_Query( $args );
     if ( $pkvuosittain-> have_posts() ) :
+        /* HTML:n generointi*/
         echo '<table id="pk-taulukko">';
         echo '<tr class="pk-rivi">';	
-        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(1)\')">Nimi <i class="fa fa-sort" style="font-size:13px;"></i></th>';
-        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(2)\')">Järjestysnumero <i class="fa fa-sort" style="font-size:13px;"></i></th>';
-        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(3)\')">Päivämäärä <i class="fa fa-sort" style="font-size:13px;"></i></th>';
-        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(4)\')">Tyyppi <i class="fa fa-sort" style="font-size:13px;"></i></th>';
+        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(1)\')">Nimi <i class="fa fa-sort hvr-grow-custom" style="font-size:13px;"></i></th>';
+        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(2)\')">Järjestysnumero <i class="fa fa-sort hvr-grow-custom" style="font-size:13px;"></i></th>';
+        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(3)\')">Päivämäärä <i class="fa fa-sort hvr-grow-custom" style="font-size:13px;"></i></th>';
+        echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(4)\')">Tyyppi <i class="fa fa-sort hvr-grow-custom" style="font-size:13px;"></i></th>';
         echo '</tr>';
         while ( $pkvuosittain->have_posts() ) : $pkvuosittain->the_post();
         	global $post;
@@ -67,14 +69,13 @@ $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request  )  
             $jn = get_post_meta( $post->ID, 'pk_numero', true );
             $tyyppi = get_the_terms( $post->ID, 'tyyppi' );
         	echo '<tr class="item">';
-            echo '<td><a href="' . $slug . '">' . $title . '</a></td>';
+            echo '<td><a class="hvr-grow" href="' . $slug . '">' . $title . ' <i class="fas fa-file-pdf" ></i></a></td>';
             echo '<td> ' . $jn  . '</td>';
             echo '<td> ' . $pm  . '</td>';
             echo '<td> ' . $tyyppi[0]->name  . '</td>';
             echo '</tr>';
         endwhile;
     echo '</table>';
-    //echo '</div>';
 endif;
 ?>
 

@@ -1,12 +1,16 @@
 .pk-indeksit {
     background-color: #2c8f43 !important;
-    color: #fccb16;
+    color: #fff;
 }
 .pk-indeksit:hover {
     background-color: #247c39 !important;
-    color: #fccb16;
+    color: #fff;
 }
 #pk-dropdown-li {
     list-style-type: none;
     margin-bottom: 10px;
+}
+#pk-taulukko a {
+    color: #2c8f43;
+    font-size: 1.1em;
 }
