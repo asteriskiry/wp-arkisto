@@ -1,8 +1,8 @@
 <?php 
-/*
+
+/**
  * Template Name: Pöytäkirjat-archive
- * Näytetään silloin kun ollaan custom post type "Pöytäkirjat" archive-sivulla
-* */
+ **/
 ?>
 
 <?php get_header(); ?>
@@ -38,7 +38,9 @@ $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request  )  
 </div>
 <div id="pk-content">
 <?php
+
 /* Parametrit Loopille */
+
     $args = array(
         'post_type' 		=> 'poytakirjat',
         'tax_query' 		=> array(
@@ -51,6 +53,7 @@ $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request  )  
     );
 
     /* Loop joka hakee poytakirjat */
+
     $pkvuosittain = new WP_Query( $args );
     if ( $pkvuosittain-> have_posts() ) :
         /* HTML:n generointi*/

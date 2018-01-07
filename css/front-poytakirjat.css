@@ -1,3 +1,9 @@
+/**
+ * Pöytäkirjojen frontin tyylit
+ **/
+
+/* Archive-sivu */
+
 .pk-indeksit {
     background-color: #2c8f43 !important;
     color: #fff;
@@ -13,4 +19,29 @@
 #pk-taulukko a {
     color: #2c8f43;
     font-size: 1.1em;
+}
+
+/* Single-sivu */
+
+.pk-thumb a {
+    height: 50%;
+    width: 50%;
+    margin: auto;
+    display: block;
+    border: 2px solid black;
+    box-shadow: 10px 10px 5px grey;
+}
+.pk-thumb img {
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+    -webkit-filter: blur(2px);
+    display: block;
+}
+.pk-thumb img:hover {
+    -webkit-filter: blur(0px);
+}    
+.pk-single-hidden {
 }
