@@ -21,7 +21,7 @@ addButton.addEventListener( 'click', function() {
 
 pkUploader.on( 'select', function() {
     var attachment = pkUploader.state().get('selection').first().toJSON();
-    img.setAttribute( 'src', attachment.url );
+    img.setAttribute( 'src', attachment.sizes.medium.url );
     hidden.setAttribute( 'value', JSON.stringify( [{ id: attachment.id, url: attachment.url }]) );
     toggleVisibility( 'ADD' );
 } );

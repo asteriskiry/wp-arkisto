@@ -18,27 +18,34 @@
 <ul>
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post();    
 
+    global $post;
  $args = array(
    'post_type' => 'attachment',
-   'numberposts' => -1,
-   'post_status' => null,
-   'post_parent' => $post->ID
+ //  'numberposts' => -1,
+ //  'post_status' => null,
+ //  'post_parent' => $post->ID
   );
 
     $attachments = get_posts( $args );
+            var_dump($attachments);
     if ( $attachments ) {
         foreach ( $attachments as $attachment ) {
             echo '<li>';
+            echo '<div class="pk-grid">';
             echo '<div class="pk-thumb">';
             the_attachment_link( $attachment->ID, true );
-            echo '<div class="pk-single-hidden">klikkaa</div>';
             echo '</div>';
             echo '<div class="pk-single-meta">';
-            echo '<p>';
+            echo '<div class="pk-buttons-left">';
+            echo previous_post_link('%link', 'Edellinen pöytäkirja');
+            echo '</div>';
+            echo '<div class="pk-buttons-right">';
+            echo next_post_link('%link', 'Seuraava pöytäkirja');
+            echo '</div>';
+            echo '<br>';
             echo apply_filters( 'the_title', $attachment->post_title );
-            echo previous_post_link();
-            echo next_post_link();
-            echo '</p></div></li>';
+            echo '</div></li>';
+            echo '</div>';
         }
     }
 

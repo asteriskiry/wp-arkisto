@@ -4361,6 +4361,7 @@
 .hvr-grow-custom:hover, .hvr-grow-custom:focus, .hvr-grow-custom:active {
   -webkit-transform: scale(1.3);
   transform: scale(1.3);
+  cursor: pointer;
 }
 
 /* Icon Rotate Custom */

@@ -22,7 +22,7 @@ function pk_uploader_callback( $post_id ) {
     ?>
 
     <div id="metabox_wrapper">
-        <a href="" id="pk-tag"></a>
+        <img id="pk-tag"></img>
 		<input type="hidden" id="pk-hidden" name="custom_pk_data">
 		<input type="button" id="pk-upload-button" class="button" value="Lisää pöytäkirja">
 		<input type="button" id="pk-delete-button" class="button" value="Poista pöytäkirja">
