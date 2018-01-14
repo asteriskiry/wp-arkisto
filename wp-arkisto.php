@@ -39,7 +39,7 @@ add_action( 'admin_enqueue_scripts', 'wpark_admin_enqueue_scripts' );
 /* Tyylien ja javascriptin lataus fronttiin */
 
 function wpark_front_enqueue_scripts() {
-    
+
     wp_enqueue_style( 'wpark-front-css', plugins_url( 'css/front-poytakirjat.css', __FILE__ ) );
     wp_enqueue_style( 'hover-master-css', plugins_url( 'assets/hover.css', __FILE__ ) );
     wp_enqueue_style( 'buttons-css', plugins_url( 'assets/buttons.css', __FILE__ ) );

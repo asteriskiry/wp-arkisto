@@ -7,7 +7,7 @@
 /* Custom post type "Pöytäkirjat" rekisteröinti */
 
 function wpark_pk_register_post_type() {
-    
+
     $singular = 'Pöytäkirja';
     $plural = 'Pöytäkirjat';
     $slug = 'poytakirjat';
@@ -92,15 +92,15 @@ function wpark_pk_register_taxonomy_vuosi() {
         'not_found'                  => 'Vuotta ei löytynyt.',
         'menu_name'                  => $plural,
     );
-    
+
     $args = array(
-            'hierarchical'          => false,
-            'labels'                => $labels,
-            'show_ui'               => true,
-            'show_admin_column'     => true,
-            'update_count_callback' => '_update_post_term_count',
-            'query_var'             => true,
-            'rewrite'               => array( 'slug' => $slug ),
+        'hierarchical'          => false,
+        'labels'                => $labels,
+        'show_ui'               => true,
+        'show_admin_column'     => true,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var'             => true,
+        'rewrite'               => array( 'slug' => 'vuosi' ),
     ); 
     register_taxonomy( 'vuosi', 'poytakirjat', $args );
 }
@@ -132,15 +132,15 @@ function wpark_pk_register_taxonomy_tyyppi() {
         'not_found'                  => 'Tyyppejä ei löytynyt.',
         'menu_name'                  => $plural,
     );
-    
+
     $args = array(
-            'hierarchical'          => true,
-            'labels'                => $labels,
-            'show_ui'               => true,
-            'show_admin_column'     => true,
-            'update_count_callback' => '_update_post_term_count',
-            'query_var'             => true,
-            'rewrite'               => array( 'slug' => $slug ),
+        'hierarchical'          => true,
+        'labels'                => $labels,
+        'show_ui'               => true,
+        'show_admin_column'     => true,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var'             => true,
+        'rewrite'               => array( 'slug' => $slug ),
     ); 
     register_taxonomy( 'tyyppi', 'poytakirjat', $args );
 }
@@ -169,7 +169,7 @@ add_action('add_meta_boxes', 'wpark_pk_add_metabox');
 function wpark_pk_callback( $post ) {
     wp_nonce_field( basename( __FILE__  ), 'wpark_pk_nonce' );
     $wpark_pk_stored_meta = get_post_meta( $post->ID );   
-    ?>
+?>
 
 <div class="meta-row">
     <div class="meta-th">
@@ -190,32 +190,32 @@ function wpark_pk_callback( $post ) {
 </div>
 
 <?php 
-/***********************************************************
- * Editori HTML-pöytäkirjoja varten, kommentoitu pois      *
- ***********************************************************
+    /***********************************************************
+     * Editori HTML-pöytäkirjoja varten, kommentoitu pois      *
+     ***********************************************************
 ?>
 
 <div class="meta">
-    <div class="meta-th">
-        <span>Lisää pöytäkirja "Lisää media" -näppäimestä.</span>
-    </div>
+<div class="meta-th">
+<span>Lisää pöytäkirja "Lisää media" -näppäimestä.</span>
+</div>
 </div>
 
 <div class="meta-editor"></div>
-    <?php
-    $content = get_post_meta( $post->ID, 'poytakirja', true  );
+<?php
+     $content = get_post_meta( $post->ID, 'poytakirja', true  );
     $editor = 'poytakirja';
     $settings = array(
         'textarea_rows' => 8,
         'media_buttons' => true,
     );
     wp_editor( $content, $editor, $settings );
-    ?>
-</div>
+?>
+    </div>
 
 <?php
 
-**********************************************************/
+    **********************************************************/
 
 }
 
@@ -249,11 +249,11 @@ function wpark_pk_meta_save( $post_id ) {
     }
 
     /* HTML-pöytäkirjoja varten, kommentoitu pois
-        
+
     if ( isset ( $_POST[ 'poytakirja' ] ) ) {
         update_post_meta( $post_id, 'poytakirja', $_POST[ 'poytakirja' ]  );
     }
-    */
+     */
 }
 
 add_action( 'save_post', 'wpark_pk_meta_save' );
@@ -261,17 +261,17 @@ add_action( 'save_post', 'wpark_pk_meta_save' );
 /* Templojen lataus */
 
 function dwwp_load_templates( $original_template ) {
-       if ( get_query_var( 'post_type' ) !== 'poytakirjat' ) {
-               return $original_template;
-       }
-       if ( is_archive() || is_search() ) {
-            return plugin_dir_path( __FILE__ ) . 'templates/poytakirjat-archive.php';
-       } elseif(is_singular('poytakirjat')) {
-            return plugin_dir_path( __FILE__ ) . 'templates/poytakirjat-single.php';
-       }else{
-       	return get_page_template();
-       }
+    if ( get_query_var( 'post_type' ) !== 'poytakirjat' ) {
         return $original_template;
+    }
+    if ( is_archive() || is_search() ) {
+        return plugin_dir_path( __FILE__ ) . 'templates/poytakirjat-archive.php';
+    } elseif(is_singular('poytakirjat')) {
+        return plugin_dir_path( __FILE__ ) . 'templates/poytakirjat-single.php';
+    }else{
+        return get_page_template();
+    }
+    return $original_template;
 }
 add_action( 'template_include', 'dwwp_load_templates' );
 ?>
