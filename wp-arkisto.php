@@ -29,8 +29,8 @@ function wpark_admin_enqueue_scripts() {
         wp_enqueue_style( 'wpark-admin-css', plugins_url( 'css/admin-poytakirjat.css', __FILE__ ) );
         wp_enqueue_script( 'wpark-admin-js', plugins_url( 'js/admin-poytakirjat.js', __FILE__ ), array( 'jquery', 'jquery-ui-datepicker', 'media-upload' ), true );
         wp_enqueue_style( 'jquery-style', plugins_url( 'assets/jquery-ui-theme-asteriski/jquery-ui.css', __FILE__ ) );
-        wp_enqueue_script( 'wpark_pk_uploader', plugin_dir_url( __FILE__  ) . 'js/admin-poytakirjat-uploader.js', array('jquery', 'media-upload'), '0.0.2', true  );
-        wp_localize_script( 'wpark_pk_uploader', 'pkUploads', array( 'pkdata' => get_post_meta( get_the_ID(), 'custom_pk_data', true  )  )  );
+        wp_enqueue_script( 'wpark_pdf_uploader', plugin_dir_url( __FILE__  ) . 'js/admin-poytakirjat-uploader.js', array('jquery', 'media-upload'), '0.0.2', true  );
+        wp_localize_script( 'wpark_pdf_uploader', 'pdfUploads', array( 'pdfdata' => get_post_meta( get_the_ID(), 'custom_pdf_data', true  )  )  );
     }
 }
 

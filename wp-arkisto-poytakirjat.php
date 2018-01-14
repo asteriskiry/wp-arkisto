@@ -55,9 +55,9 @@ function wpark_pk_register_post_type() {
         ),
         'supports'              => array(
             'title',
-             'editor',
-             'comments',
-             'thumbnails',
+            'comments',
+            // 'editor',
+            // 'custom-fields',
         )
     );
 
@@ -94,7 +94,7 @@ function wpark_pk_register_taxonomy_vuosi() {
     );
     
     $args = array(
-            'hierarchical'          => true,
+            'hierarchical'          => false,
             'labels'                => $labels,
             'show_ui'               => true,
             'show_admin_column'     => true,
@@ -191,9 +191,8 @@ function wpark_pk_callback( $post ) {
 
 <?php 
 /***********************************************************
- * Editori plaintext-pöytäkirjoja varten, kommentoitu pois *
+ * Editori HTML-pöytäkirjoja varten, kommentoitu pois      *
  ***********************************************************
- */
 ?>
 
 <div class="meta">
@@ -216,7 +215,7 @@ function wpark_pk_callback( $post ) {
 
 <?php
 
-/**********************************************************/
+**********************************************************/
 
 }
 
@@ -249,12 +248,12 @@ function wpark_pk_meta_save( $post_id ) {
         update_post_meta( $post_id, 'pk_paivamaara', sanitize_text_field( $_POST[ 'pk_paivamaara' ] ) );
     }
 
-    /* Plaintext-pöytäkirjoja varten, kommentoitu pois */
+    /* HTML-pöytäkirjoja varten, kommentoitu pois
         
     if ( isset ( $_POST[ 'poytakirja' ] ) ) {
         update_post_meta( $post_id, 'poytakirja', $_POST[ 'poytakirja' ]  );
     }
-    /**/
+    */
 }
 
 add_action( 'save_post', 'wpark_pk_meta_save' );

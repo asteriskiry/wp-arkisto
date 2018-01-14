@@ -17,6 +17,9 @@
 <div id="pk">
 <div id="pk-dropdown">
 <?php
+
+/* Dropdown-valikko */
+
 global $wp;
 $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request  )  );
 ?>
@@ -64,27 +67,24 @@ $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request  )  
         echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(3)\')">Päivämäärä <i class="fa fa-sort hvr-grow-custom" style="font-size:13px;"></i></th>';
         echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(4)\')">Tyyppi <i class="fa fa-sort hvr-grow-custom" style="font-size:13px;"></i></th>';
         echo '</tr>';
+
+        /* Haetaan tiedot ja tallennetaan muuttujiin */
+        
         while ( $pkvuosittain->have_posts() ) : $pkvuosittain->the_post();
-
-            /* Thumbnaileja varten */
-
-            $args_attach = array(
-            'post_type' => 'attachment',
-            'numberposts' => -1,
-            'post_status' => null,
-            'post_parent' => $post->ID
-        );
-
-            $attachments = get_posts( $args_attach );
-            foreach ( $attachments as $attachment ) {}
 
         	global $post;
         	$title = get_the_title();
-        	$slug = get_permalink();
+            $custom_pdf_data = get_post_meta($post->ID, 'custom_pdf_data');
+            /* Kommentoitu $slug sitä varten jos halutaan valikosta suoraan pdf-tiedostoon */
+            //$slug = $custom_pdf_data[0]['src'];
+            $slug = get_permalink();
             $pm = get_post_meta( $post->ID, 'pk_paivamaara', true );
             $jn = get_post_meta( $post->ID, 'pk_numero', true );
             $tyyppi = get_the_terms( $post->ID, 'tyyppi' );
-            $thumbnail = wp_get_attachment_thumb_url( $attachment->ID, true  );
+            $thumbnail = $custom_pdf_data[0]['tnSmall']; 
+
+            /* Generoidaan HTML */
+
         	echo '<tr class="item">';
             echo '<td><div class="tooltip"><a class="hvr-grow"href="' . $slug . '">' . $title . ' <i class="fas fa-file-pdf" ></i></a><img class="tooltipimg" src="' . $thumbnail  . '"></div></td>';
             echo '<td> ' . $jn  . '</td>';

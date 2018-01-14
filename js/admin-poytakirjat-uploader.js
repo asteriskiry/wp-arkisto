@@ -2,11 +2,11 @@
  * PDF-uploaderin js:t
  **/
 
-var addButton = document.getElementById( 'pk-upload-button' );
-var deleteButton = document.getElementById( 'pk-delete-button' );
-var img = document.getElementById( 'pk-tag' );
-var hidden = document.getElementById( 'pk-hidden' );
-var pkUploader = wp.media({
+var addButton = document.getElementById( 'pdf-upload-button' );
+var deleteButton = document.getElementById( 'pdf-delete-button' );
+var img = document.getElementById( 'pdf-tag' );
+var hidden = document.getElementById( 'pdf-hidden' );
+var pdfUploader = wp.media({
     title: 'Valitse pöytäkirja',
     button: { text: 'Valitse' },
     multiple: false,
@@ -14,17 +14,21 @@ var pkUploader = wp.media({
 });
 
 addButton.addEventListener( 'click', function() {
-    if ( pkUploader ) {
-        pkUploader.open();
+    if ( pdfUploader ) {
+        pdfUploader.open();
     }
 } );
 
-pkUploader.on( 'select', function() {
-    var attachment = pkUploader.state().get('selection').first().toJSON();
+/* Datan tallennus */
+
+pdfUploader.on( 'select', function() {
+    var attachment = pdfUploader.state().get('selection').first().toJSON();
     img.setAttribute( 'src', attachment.sizes.medium.url );
-    hidden.setAttribute( 'value', JSON.stringify( [{ id: attachment.id, url: attachment.url }]) );
+    hidden.setAttribute( 'value', JSON.stringify( [{ id: attachment.id, url: attachment.url, tnBig: attachment.sizes.full.url, tnMed: attachment.sizes.medium.url, tnSmall: attachment.sizes.thumbnail.url }]) );
     toggleVisibility( 'ADD' );
 } );
+
+/* Poistonappi */
 
 deleteButton.addEventListener( 'click', function() {
     img.removeAttribute( 'src' );
@@ -32,11 +36,13 @@ deleteButton.addEventListener( 'click', function() {
     toggleVisibility( 'DELETE' );
 } );
 
+/* Lisäys- ja poistonappien piilotus */
+
 var toggleVisibility = function( action ) {
     if ( 'ADD' === action ) {
         addButton.style.display = 'none';
         deleteButton.style.display = '';
-        img.setAttribute( 'style', 'width: 100%;' );
+        img.setAttribute( 'style', 'width: 100%; border: 1px solid gray; box-shadow: 2px 2px 2px #556b55;' );
     }
 
     if ( 'DELETE' === action ) {
@@ -46,12 +52,14 @@ var toggleVisibility = function( action ) {
     }
 };
 
+/* Jos tiedosto on valittu, lisätään poistonappio ja piilotetaan lisäysnappi */
+
 window.addEventListener( 'DOMContentLoaded', function() {
-    if ( "" === pkUploads.pkdata || 0 === pkUploads.pkdata.length ) {
+    if ( "" === pdfUploads.pdfdata || 0 === pdfUploads.pdfdata.length ) {
         toggleVisibility( 'DELETE' );
     } else {
-        img.setAttribute( 'src', pkUploads.pkdata.src );
-        hidden.setAttribute( 'value', JSON.stringify([ pkUploads.pkdata ]) );
+        img.setAttribute( 'src', pdfUploads.pdfdata.tnMed );
+        hidden.setAttribute( 'value', JSON.stringify([ pdfUploads.pdfdata ]) );
         toggleVisibility( 'ADD' );
     }
 } );
