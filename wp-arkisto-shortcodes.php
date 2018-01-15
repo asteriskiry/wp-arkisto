@@ -1,6 +1,6 @@
 <?php
 
-/* WP-arkiston shortcodet jos sellaisia joskus tarvitaan */
+/* WP-arkiston shortcodet jos sellaisia joskus tarvitaan, alla esimerkki */
 
 function pk_taxonomy_list( $atts, $content = null ) {
 
