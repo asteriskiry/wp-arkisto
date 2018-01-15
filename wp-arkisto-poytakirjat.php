@@ -24,8 +24,8 @@ function wpark_pk_register_post_type() {
         'view_item'             => 'Näytä ' . $singular,
         'search_term'           => 'Etsi pöytäkirjaa',
         'parent'                => 'Vanhempi ' . $singular,
-        'not_found'             => 'Pöytäkirjoja ei löydy',
-        'not_found_in_trash'    => 'Pöytäkirjoja ei löydy roskakorista'
+        'not_found'             => 'Pöytäkirjoja ei löytynyt',
+        'not_found_in_trash'    => 'Pöytäkirjoja ei löytynyt roskakorista'
     );
 
     $args = array(
@@ -129,7 +129,7 @@ function wpark_pk_register_taxonomy_tyyppi() {
         'separate_items_with_commas' => 'Erottele ' . $plural . ' pilkuilla',
         'add_or_remove_items'        => 'Lisää tai poista tyyppejä',
         'choose_from_most_used'      => 'Valitse suosituimmista tyypeistä',
-        'not_found'                  => 'Tyyppejä ei löytynyt.',
+        'not_found'                  => 'Tyyppejä ei löytynyt',
         'menu_name'                  => $plural,
     );
 
