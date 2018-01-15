@@ -94,7 +94,7 @@ function wpark_pk_register_taxonomy_vuosi() {
     );
 
     $args = array(
-        'hierarchical'          => false,
+        'hierarchical'          => true,
         'labels'                => $labels,
         'show_ui'               => true,
         'show_admin_column'     => true,
