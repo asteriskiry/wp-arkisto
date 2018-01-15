@@ -23,7 +23,7 @@ addButton.addEventListener( 'click', function() {
 
 pdfUploader.on( 'select', function() {
     var attachment = pdfUploader.state().get('selection').first().toJSON();
-    img.setAttribute( 'src', attachment.sizes.medium.url );
+    img.setAttribute( 'src', attachment.sizes.full.url );
     hidden.setAttribute( 'value', JSON.stringify( [{ id: attachment.id, url: attachment.url, tnBig: attachment.sizes.full.url, tnMed: attachment.sizes.medium.url, tnSmall: attachment.sizes.thumbnail.url }]) );
     toggleVisibility( 'ADD' );
 } );
@@ -42,7 +42,7 @@ var toggleVisibility = function( action ) {
     if ( 'ADD' === action ) {
         addButton.style.display = 'none';
         deleteButton.style.display = '';
-        img.setAttribute( 'style', 'width: 100%; border: 1px solid gray; box-shadow: 2px 2px 2px #556b55;' );
+        img.setAttribute( 'style', 'width: 100%; max-width: 500px; border: 1px solid gray; box-shadow: 2px 2px 2px #556b55;' );
     }
 
     if ( 'DELETE' === action ) {
@@ -58,7 +58,7 @@ window.addEventListener( 'DOMContentLoaded', function() {
     if ( "" === pdfUploads.pdfdata || 0 === pdfUploads.pdfdata.length ) {
         toggleVisibility( 'DELETE' );
     } else {
-        img.setAttribute( 'src', pdfUploads.pdfdata.tnMed );
+        img.setAttribute( 'src', pdfUploads.pdfdata.tnBig );
         hidden.setAttribute( 'value', JSON.stringify([ pdfUploads.pdfdata ]) );
         toggleVisibility( 'ADD' );
     }

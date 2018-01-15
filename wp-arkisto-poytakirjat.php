@@ -47,6 +47,7 @@ function wpark_pk_register_post_type() {
         'capability_type'       => 'post',
         'map_meta_cap'          => true,
         // 'capabilities'       => array(),
+        'taxonomies'            => array( 'vuosi', 'tyyppi', ),
         'rewrite'               => array( 
             'slug'                  => $slug,
             'with_front'            => true,
@@ -97,6 +98,7 @@ function wpark_pk_register_taxonomy_vuosi() {
         'hierarchical'          => true,
         'labels'                => $labels,
         'show_ui'               => true,
+        // 'meta_box_cb'           => 'wpark_pk_metaboxcb',
         'show_admin_column'     => true,
         'update_count_callback' => '_update_post_term_count',
         'query_var'             => true,
@@ -105,6 +107,13 @@ function wpark_pk_register_taxonomy_vuosi() {
     register_taxonomy( 'vuosi', 'poytakirjat', $args );
 }
 add_action('init', 'wpark_pk_register_taxonomy_vuosi');
+
+/* Ehkä joskus 
+
+function wpark_pk_metaboxcb () {
+    echo '<h1>Valitse vuosi</h1>';
+    }
+*/
 
 /* Custom taxonomyn "Tyyppi" rekisteröinti pöyräkirjoille */
 
@@ -137,7 +146,6 @@ function wpark_pk_register_taxonomy_tyyppi() {
         'hierarchical'          => true,
         'labels'                => $labels,
         'show_ui'               => true,
-        'show_admin_column'     => true,
         'update_count_callback' => '_update_post_term_count',
         'query_var'             => true,
         'rewrite'               => array( 'slug' => $slug ),
@@ -147,7 +155,7 @@ function wpark_pk_register_taxonomy_tyyppi() {
 add_action('init', 'wpark_pk_register_taxonomy_tyyppi');
 
 
-/* Pöytäkirjojen lisäyssivun metaboxi */
+/* Pöytäkirjojen lisäyssivun metaboxi (Järjestysnum, pvm) */
 
 function wpark_pk_add_metabox() {
 
@@ -155,6 +163,15 @@ function wpark_pk_add_metabox() {
         'wpark_pk_meta',
         'Pöytäkirjan tiedot',
         'wpark_pk_callback',
+        'poytakirjat',
+        'normal',
+        'high'
+    );
+
+    add_meta_box(
+        'wpark_pk_help',
+        'Tiedote',
+        'wpark_pk_help_callback',
         'poytakirjat',
         'normal',
         'high'
@@ -219,6 +236,10 @@ function wpark_pk_callback( $post ) {
 
 }
 
+function wpark_pk_help_callback( $post ) {
+    echo '<div class="meta-help">Jos et ole ihan varma mitä teet, katso <a href="' . admin_url( 'edit.php?post_type=poytakirjat&page=ohjeet' ) . '">ohjeet</a></div>';
+}
+
 /* Otsikko-kentän placeholderin vaihto */
 
 function wpark_pk_change_default_title( $title  ){
@@ -274,4 +295,40 @@ function dwwp_load_templates( $original_template ) {
     return $original_template;
 }
 add_action( 'template_include', 'dwwp_load_templates' );
+
+/* Ohjeet-sivu */
+
+function wpark_pk_add_help_page() {
+
+    add_submenu_page( 
+        'edit.php?post_type=poytakirjat',
+        'Ohjeet',
+        'Ohjeet',
+        'manage_options',
+        'ohjeet',
+        'wpark_pk_help_cb'
+    );
+}
+
+add_action( 'admin_menu', 'wpark_pk_add_help_page' ); 
+
+function wpark_pk_help_cb() {
 ?>
+    <div class="help-page">
+        <h1>Ohjeet pöytäkirjojen lisäämiseen</h1>
+        <ol type="1">    
+            <li>Aseta otsikko muodossa "Pöytäkirja järjestysnumero/vuosi" esim. "Pöytäkirja 1/2018"</li>
+            <li>Aseta järjestysnumero muodossa "järjestysnumero/vuosi" esim. "1/2018"</li>
+            <li>Valitse päivämäärä</li>
+            <li>Valitse pdf-tiedosto, pidä valintaikkunan kentät vakiona</li>
+            <li>Valitse saako pöytäkirjaa kommentoida</li>
+            <li>Valitse vuosi (vain yksi)</li>
+            <li>Valitse tyyppi (vain yksi)</li>
+            <li>Paina "Julkaise"</li>
+            <li>Valmista! Käy vielä tarkistamassa että lisäämäsi pöytäkirja näkyy oikein</li>
+        </ol>
+    </div>
+
+<?php    
+}
+

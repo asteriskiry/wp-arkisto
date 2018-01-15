@@ -17,13 +17,6 @@
 	float: right;
 	width: 75%;
 }
-.meta {
-	margin-top: 20px;
-}
-.quicktags-toolbar {
-	margin-bottom: 5px;
-	display: inline-block;
-	float: left;
-	background: #ffffff !important;
-	border-bottom: none !important;
+#wpark_pk_meta {
+	margin-top: 0;
 }

@@ -14,7 +14,7 @@ function register_metaboxes() {
         'Pöytäkirjan tiedosto', 
         __NAMESPACE__ . '\pdf_uploader_callback',
         'poytakirjat',
-        'side'
+        'normal'
     );
 }
 add_action( 'add_meta_boxes', __NAMESPACE__ . '\register_metaboxes' );
