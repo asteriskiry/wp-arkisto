@@ -5,7 +5,7 @@
  * Description: Työkalu dokumenttien hallintaan. Pöytäkirja- ja tenttiarkisto.
  * Plugin URI: https://asteriski.fi
  * Author: Asteriski www-toimikunta, Maks Turtiainen
- * Version: 0.0.2
+ * Version: 1.0
  * Author URI: https://asteriski.fi
  * License: BSD
  **/
@@ -48,4 +48,21 @@ function wpark_front_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'wpark_front_enqueue_scripts' );
 
+/* Dashboard-widgetti */
+
+function wpark_dashboard () {
+    wp_add_dashboard_widget( 'wpark_dashboard_welcome', 'Hei', 'wpark_add_dashboard_widget' );
+}
+function wpark_add_dashboard_widget () {
 ?>
+    <div class="wpark-dashboard">
+        <h1>Tervetuloa</h1>
+        <h3>Haluatko:</h3>
+        <ul>
+<?php   
+        echo '<li><a href="' . admin_url( 'edit.php?post_type=poytakirjat' ) . '">Lisätä pöytäkirjan</a></li>';
+        echo '<li><a href="' . admin_url( 'edit.php?post_type=tentit' ) . '">Lisätä tentin tenttiarkistoon</a></li>'; 
+        echo '</ul>';
+}
+ 
+add_action( 'wp_dashboard_setup', 'wpark_dashboard' );

@@ -1,32 +1,33 @@
 <?php
 
 /* WP-arkiston shortcodet jos sellaisia joskus tarvitaan, alla esimerkki */
+/* Shortcode [pk_listaa_vuodet] listaa kaikki "Vuodet" taxonomyn termit */
 
 function pk_taxonomy_list( $atts, $content = null ) {
 
     $atts = shortcode_atts(
         array(
 
-            'title' => 'Pöytäkirjat'
+            'title' => 'Pöytäkirjojen vuodet'
         ), $atts
     );
     $lista = get_terms('vuosi');
 
-    $displaylist = '<div id="lista">';
-    $displaylist .= '<h4>' . $atts['title']  . '</h4>';
-    $displaylist .= '<ul>';
+    $vuosilista = '<div id="lista">';
+    $vuosilista .= '<h4>' . $atts['title']  . '</h4>';
+    $vuosilista .= '<ul>';
 
     foreach( $lista as $vuos ) {
 
-        $displaylist .= '<li class="vuodet">';
-        $displaylist .= '<a href="' . get_term_link( $vuos ) . '">';
-        $displaylist .= $vuos->name . '</a></li>';
+        $vuosilista .= '<li class="vuodet">';
+        $vuosilista .= '<a href="' . get_term_link( $vuos ) . '">';
+        $vuosilista .= $vuos->name . '</a></li>';
     }
-    $displaylist .= '</ul></div>';
+    $vuosilista .= '</ul></div>';
 
-    return $displaylist;
+    return $vuosilista;
 
 }
-add_shortcode( 'pk_list', "pk_taxonomy_list" );
+add_shortcode( 'pk_listaa_vuodet', "pk_taxonomy_list" );
 
 ?>
