@@ -2,6 +2,8 @@
  * PDF-uploaderin js:t
  **/
 
+/* Tallennetaan HTML-elementit muuttujiin */
+
 var addButton = document.getElementById( 'pdf-upload-button' );
 var deleteButton = document.getElementById( 'pdf-delete-button' );
 var img = document.getElementById( 'pdf-tag' );

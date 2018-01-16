@@ -3,11 +3,11 @@
 
 Pöytäkirjaosio käytännössä valmis, tenttiarkisto aloitettu.
 
-Käyttöönotto
+Vähän ohjeita
 -----------
 
 Mene wp-content/plugins -hakemistoon
 ```
 git clone https://github.com/mjturt/wp-arkisto.git
 ```
-Frontti generoituu automaattisesti pöytäkirjojen/tenttiarkiston archive-sivuille joten täytyy vain luoda sivu jonka permalink on muotoa domain.com/poytakirjat tai domain.com/tenttiarkisto
+Frontti generoituu automaattisesti pöytäkirjojen/tenttiarkiston archive-sivuille joten täytyy vain luoda sivu jonka permalink on muotoa esim. domain.com/poytakirjat tai domain.com/tentit
