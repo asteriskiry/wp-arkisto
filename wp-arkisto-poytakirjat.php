@@ -238,9 +238,17 @@ function wpark_pk_callback( $post ) {
 
 function wpark_pk_help_callback( $post ) {
     echo '<div class="meta-help">Jos et ole ihan varma mitä teet, katso <a href="' . admin_url( 'edit.php?post_type=poytakirjat&page=ohjeet' ) . '">ohjeet</a></div>';
+
+    /* Uusi otsikko-ominaisuus */
+echo '<input type="hidden" name="meta_noncename" id="meta_noncename" value="' .
+wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+
+$title = get_post_meta($post->ID, '_title', true);
+
+echo '<input type="text" name="_title" value="' . $title  . '" class="widefat" />';
 }
 
-/* Otsikko-kentän placeholderin vaihto */
+/* Otsikko-kentän placeholderin vaihto 
 
 function wpark_pk_change_default_title( $title  ){
     $screen = get_current_screen(); 
@@ -251,6 +259,7 @@ function wpark_pk_change_default_title( $title  ){
 }
 
 add_filter( 'enter_title_here', 'wpark_pk_change_default_title'  );
+*/
 
 /* Metatietojen tallennus */
 
@@ -278,6 +287,35 @@ function wpark_pk_meta_save( $post_id ) {
 }
 
 add_action( 'save_post', 'wpark_pk_meta_save' );
+
+/* Yritys saada titlen luonti automatisoitua */
+
+function save_title_meta($post_id, $post) {
+
+if ( !wp_verify_nonce( $_POST['meta_noncename'], plugin_basename(__FILE__) )) {
+return $post->ID;
+}
+
+if ( !current_user_can( 'edit_post', $post->ID ))
+    return $post->ID;
+
+$project_meta['_title'] = $_POST['_title'];
+
+foreach ($project_meta as $key => $value) { 
+    if( $post->post_type == 'revision' ) return; 
+    $value = implode(',', (array)$value); 
+    if(get_post_meta($post->ID, $key, FALSE)) { 
+        update_post_meta($post->ID, $key, $value);
+    } else { 
+        add_post_meta($post->ID, $key, $value);
+
+    }
+    if(!$value) delete_post_meta($post->ID, $key); 
+}
+
+ }
+
+add_action('save_post', 'save_title_meta', 1, 2); 
 
 /* Templojen lataus */
 
