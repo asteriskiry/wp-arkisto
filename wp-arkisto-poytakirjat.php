@@ -193,7 +193,7 @@ function wpark_pk_callback( $post ) {
         <label for="pk-numero" class="pk-row-title">Järjestysnumero</label>
     </div>
     <div class="meta-td">
-        <input type="text" class="pk-row-content" size=10 name="pk_numero" id="pk-numero" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_numero'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_numero'][0]  ); ?>"/>
+        <input type="number" class="pk-row-content" required max=99 min=1  name="pk_numero" id="pk-numero" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_numero'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_numero'][0]  ); ?>"/>
     </div>
 </div>
 
@@ -202,7 +202,7 @@ function wpark_pk_callback( $post ) {
         <label for="pk-paivamaara" class="pk-row-title">Kokouksen päivämäärä</label>
     </div>
     <div class="meta-td">
-        <input type="text" class="pk-row-content datepicker" size=10 name="pk_paivamaara" id="pk-paivamaara" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_paivamaara'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_paivamaara'][0]  ); ?>"/>
+        <input type="date" pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}" class="pk-row-content datepicker" required size=8  name="pk_paivamaara" id="pk-paivamaara" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_paivamaara'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_paivamaara'][0]  ); ?>"/>
     </div>
 </div>
 
@@ -238,28 +238,8 @@ function wpark_pk_callback( $post ) {
 
 function wpark_pk_help_callback( $post ) {
     echo '<div class="meta-help">Jos et ole ihan varma mitä teet, katso <a href="' . admin_url( 'edit.php?post_type=poytakirjat&page=ohjeet' ) . '">ohjeet</a></div>';
-
-    /* Uusi otsikko-ominaisuus */
-echo '<input type="hidden" name="meta_noncename" id="meta_noncename" value="' .
-wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
-
-$title = get_post_meta($post->ID, '_title', true);
-
-echo '<input type="text" name="_title" value="' . $title  . '" class="widefat" />';
+    echo '<style type="text/css"> #titlewrap { display: none; }</style>';
 }
-
-/* Otsikko-kentän placeholderin vaihto 
-
-function wpark_pk_change_default_title( $title  ){
-    $screen = get_current_screen(); 
-    if  ( 'poytakirjat' == $screen->post_type  ) {
-        $title = 'Esim. Pöytäkirja 1/2018';             
-    } 
-    return $title;
-}
-
-add_filter( 'enter_title_here', 'wpark_pk_change_default_title'  );
-*/
 
 /* Metatietojen tallennus */
 
@@ -284,42 +264,24 @@ function wpark_pk_meta_save( $post_id ) {
         update_post_meta( $post_id, 'poytakirja', $_POST[ 'poytakirja' ]  );
     }
      */
+    $pktitle = array();
+    $pktitle['ID'] = $post_id;
+    $vuosi = get_the_terms( $post_id, 'vuosi' );
+  
+    if ( get_post_type() == 'poytakirjat' ) {
+    $pktitle['post_title'] = 'Pöytäkirja ' . get_post_meta( $post_id, 'pk_numero', true ) . '/' . $vuosi[0]->name;
+    }
+    
+    remove_action( 'save_post', 'wpark_pk_meta_save' );
+    wp_update_post($pktitle);
+    add_action( 'save_post', 'wpark_pk_meta_save' );
 }
 
 add_action( 'save_post', 'wpark_pk_meta_save' );
 
-/* Yritys saada titlen luonti automatisoitua */
-
-function save_title_meta($post_id, $post) {
-
-if ( !wp_verify_nonce( $_POST['meta_noncename'], plugin_basename(__FILE__) )) {
-return $post->ID;
-}
-
-if ( !current_user_can( 'edit_post', $post->ID ))
-    return $post->ID;
-
-$project_meta['_title'] = $_POST['_title'];
-
-foreach ($project_meta as $key => $value) { 
-    if( $post->post_type == 'revision' ) return; 
-    $value = implode(',', (array)$value); 
-    if(get_post_meta($post->ID, $key, FALSE)) { 
-        update_post_meta($post->ID, $key, $value);
-    } else { 
-        add_post_meta($post->ID, $key, $value);
-
-    }
-    if(!$value) delete_post_meta($post->ID, $key); 
-}
-
- }
-
-add_action('save_post', 'save_title_meta', 1, 2); 
-
 /* Templojen lataus */
 
-function dwwp_load_templates( $original_template ) {
+function wpark_load_templates( $original_template ) {
     if ( get_query_var( 'post_type' ) !== 'poytakirjat' ) {
         return $original_template;
     }
@@ -332,7 +294,7 @@ function dwwp_load_templates( $original_template ) {
     }
     return $original_template;
 }
-add_action( 'template_include', 'dwwp_load_templates' );
+add_action( 'template_include', 'wpark_load_templates' );
 
 /* Ohjeet-sivu */
 

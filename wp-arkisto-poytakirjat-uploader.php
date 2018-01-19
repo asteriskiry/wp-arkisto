@@ -47,7 +47,7 @@ function save_custom_pdf( $post_id ) {
 	if ( isset( $_POST[ 'custom_pdf_data' ] ) ) {
 		$pdf_data = json_decode( stripslashes( $_POST[ 'custom_pdf_data' ] ) );
 		if ( is_object( $pdf_data[0] ) ) {
-			$pdf_data = array( 'id' => intval( $pdf_data[0]->id ), 'src' => esc_url_raw( $pdf_data[0]->url ), 'tnBig' => esc_url_raw( $pdf_data[0]->tnBig ), 'tnMed' => esc_url_raw( $pdf_data[0]->tnMed ), 'tnSmall' => esc_url_raw( $pdf_data[0]->tnSmall ) );
+			$pdf_data = array( 'id' => intval( $pdf_data[0]->id ), 'src' => esc_url_raw( $pdf_data[0]->src ), 'tnBig' => esc_url_raw( $pdf_data[0]->tnBig ), 'tnMed' => esc_url_raw( $pdf_data[0]->tnMed ), 'tnSmall' => esc_url_raw( $pdf_data[0]->tnSmall ) );
 		} else {
 			$pdf_data = [];
 		}

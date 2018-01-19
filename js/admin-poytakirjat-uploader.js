@@ -26,7 +26,7 @@ addButton.addEventListener( 'click', function() {
 pdfUploader.on( 'select', function() {
     var attachment = pdfUploader.state().get('selection').first().toJSON();
     img.setAttribute( 'src', attachment.sizes.full.url );
-    hidden.setAttribute( 'value', JSON.stringify( [{ id: attachment.id, url: attachment.url, tnBig: attachment.sizes.full.url, tnMed: attachment.sizes.medium.url, tnSmall: attachment.sizes.thumbnail.url }]) );
+    hidden.setAttribute( 'value', JSON.stringify( [{ id: attachment.id, src: attachment.url, tnBig: attachment.sizes.full.url, tnMed: attachment.sizes.medium.url, tnSmall: attachment.sizes.thumbnail.url }]) );
     toggleVisibility( 'ADD' );
 } );
 
