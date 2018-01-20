@@ -45,7 +45,24 @@
 .tooltip:hover .tooltipimg {
     opacity: 0.8;
 }
-
+.pk-flex-recent {
+    display: flex;
+    font-size: 1.3em;
+    text-align: center;
+}
+.pk-flex-recent img {
+    border: 1px solid #8e9e86;
+}
+.pk-flex-recent img:hover {
+ /*   box-shadow: 2px 2px 4px #556b55; */
+    transition: 0.7s; 
+}
+.page-title-wrap {
+    display: none;
+}
+.customtitle {
+    padding-bottom: 20px;
+}
 /************************
  *      Single-sivu     *
  ************************/

@@ -54,6 +54,18 @@ var toggleVisibility = function( action ) {
     }
 };
 
+/* Pakotetaan valitsemaan tiedosto */
+
+jQuery(function($) {
+    $('form').submit(function(event) {
+
+        if (!($('#pdf-hidden').val())) {
+            alert('Valitse tiedosto!');
+            event.preventDefault();
+        }
+    })
+});
+
 /* Jos tiedosto on valittu, lisätään poistonappio ja piilotetaan lisäysnappi */
 
 window.addEventListener( 'DOMContentLoaded', function() {

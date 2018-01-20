@@ -40,9 +40,9 @@ dropdown.onchange = onCatChange;
 <div id="pk-content">
 <?php
 
-/* Parametrit Loopille */
+/* Parametrit Loopeille */
 
-$args = array(
+$args_by_year = array(
     'post_type' 		=> 'poytakirjat',
     'tax_query' 		=> array(
         array(
@@ -53,11 +53,40 @@ $args = array(
     ),
 );
 
-/* Loop joka hakee poytakirjat */
+$args_recent = array( 
+    'numberposts' => '4',
+    'post_type' => 'poytakirjat'
+);
 
-$pkvuosittain = new WP_Query( $args );
-if ( $pkvuosittain-> have_posts() ) :
-    /* HTML:n generointi*/
+/* Jos vuotta ei valittu, generoidaan viimeisimmät  */
+
+if ($args_by_year['tax_query'][0]['terms'] == '') {
+
+	$recent_posts = wp_get_recent_posts( $args_recent );
+    echo '<h1 class="customtitle">Viimeisimmät</h1>';
+    echo '<div class="pk-flex-recent">';
+
+    foreach( $recent_posts as $recent ){
+
+        $c_pdf_data_recent = get_post_meta($recent["ID"], 'custom_pdf_data');
+        $tn = $c_pdf_data_recent[0]['tnMed'];
+        echo '<div>' . $recent["post_title"];
+		echo '<a class="hvr-curl-top-right" href="' . get_permalink($recent["ID"]) . '">' . '<img src="' . $tn . '"></img></a></div>';
+    }
+
+    echo '</div>';
+	wp_reset_query();
+
+/* Jos vuosi valitaan */
+
+} else {
+
+$pk_by_year = new WP_Query( $args_by_year );
+if ( $pk_by_year-> have_posts() ) :
+
+    /* HTML: taulukon staattiset kentät */
+
+    echo '<h1 class="customtitle">' . get_the_terms( $post->ID, 'vuosi' )[0]->name . '</h1>';
     echo '<table id="pk-taulukko">';
     echo '<tr class="pk-rivi">';	
     echo '<th class="pk-indeksit" onclick="w3.sortHTML(\'#pk-taulukko\',\'.item\', \'td:nth-child(1)\')">Nimi <i class="fa fa-sort hvr-grow-custom" style="font-size:13px;"></i></th>';
@@ -68,7 +97,7 @@ if ( $pkvuosittain-> have_posts() ) :
 
 /* Haetaan tiedot ja tallennetaan muuttujiin */
 
-while ( $pkvuosittain->have_posts() ) : $pkvuosittain->the_post();
+while ( $pk_by_year->have_posts() ) : $pk_by_year->the_post();
 
     global $post;
     $title = get_the_title();
@@ -81,7 +110,7 @@ while ( $pkvuosittain->have_posts() ) : $pkvuosittain->the_post();
     $tyyppi = get_the_terms( $post->ID, 'tyyppi' );
     $thumbnail = $custom_pdf_data[0]['tnSmall']; 
 
-    /* Generoidaan HTML */
+    /* HTML: dynaamiset kentät*/
 
     echo '<tr class="item">';
     echo '<td><div class="tooltip"><a class="hvr-grow"href="' . $slug . '">' . $title . ' <i class="fas fa-file-pdf" ></i></a><img class="tooltipimg" src="' . $thumbnail  . '"></div></td>';
@@ -92,6 +121,7 @@ while ( $pkvuosittain->have_posts() ) : $pkvuosittain->the_post();
 endwhile;
 echo '</table>';
 endif;
+}
 ?>
 </div>
 </div>

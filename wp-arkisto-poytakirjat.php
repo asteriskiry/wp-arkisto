@@ -102,17 +102,11 @@ function wpark_pk_register_taxonomy_vuosi() {
         'update_count_callback' => '_update_post_term_count',
         'query_var'             => true,
         'rewrite'               => array( 'slug' => 'vuosi' ),
+        'meta_box_cb'           => 'wpark_pk_taxonomy_meta_box',
     ); 
     register_taxonomy( 'vuosi', 'poytakirjat', $args );
 }
 add_action('init', 'wpark_pk_register_taxonomy_vuosi');
-
-/* Ehkä joskus 
-
-function wpark_pk_metaboxcb () {
-    echo '<h1>Valitse vuosi</h1>';
-    }
-*/
 
 /* Custom taxonomyn "Tyyppi" rekisteröinti pöyräkirjoille */
 
@@ -149,13 +143,43 @@ function wpark_pk_register_taxonomy_tyyppi() {
         'update_count_callback' => '_update_post_term_count',
         'query_var'             => true,
         'rewrite'               => array( 'slug' => $slug ),
+        'meta_box_cb'           => 'wpark_pk_taxonomy_meta_box',
     ); 
     register_taxonomy( 'tyyppi', 'poytakirjat', $args );
 }
 add_action('init', 'wpark_pk_register_taxonomy_tyyppi');
 
+/* Lisäyssivun taxonomioiden meta boxit */
 
-/* Pöytäkirjojen lisäyssivun metaboxi (Järjestysnum, pvm) */
+function wpark_pk_taxonomy_meta_box($post, $meta_box_properties) {
+    $taxonomy = $meta_box_properties['args']['taxonomy'];
+    $tax = get_taxonomy($taxonomy);
+    $terms = get_terms($taxonomy, array('hide_empty' => 0));
+    $name = 'tax_input[' . $taxonomy . ']';
+    $postterms = get_the_terms( $post->ID, $taxonomy );
+    $current = ($postterms ? array_pop($postterms) : false);
+    $current = ($current ? $current->term_id : 0);
+?>
+
+<div id="taxonomy-<?php echo $taxonomy; ?>" class="categorydiv">
+  <ul id="<?php echo $taxonomy; ?>-tabs" class="category-tabs">
+    <li class="tabs"><a href="#<?php echo $taxonomy; ?>-all"><?php echo $tax->labels->all_items; ?></a></li>
+  </ul>
+
+  <div id="<?php echo $taxonomy; ?>-all" class="tabs-panel">
+    <input name="tax_input[<?php echo $taxonomy; ?>][]" value="0" type="hidden">            
+    <ul id="<?php echo $taxonomy; ?>checklist" data-wp-lists="list:symbol" class="categorychecklist form-no-clear">
+<?php   foreach($terms as $term){
+$id = $taxonomy.'-'.$term->term_id;?>
+      <li id="<?php echo $id?>"><label class="selectit"><input required value="<?php echo $term->term_id; ?>" name="tax_input[<?php echo $taxonomy; ?>][]" id="in-<?php echo $id; ?>"<?php if( $current === (int)$term->term_id ){?>checked="checked"<?php } ?> type="radio"> <?php echo $term->name; ?></label></li>
+<?php   }?>
+    </ul>
+  </div>
+</div>
+<?php
+}
+
+/* Pöytäkirjojen lisäyssivun meta boxi (Järjestysnum, pvm) */
 
 function wpark_pk_add_metabox() {
 
@@ -267,11 +291,11 @@ function wpark_pk_meta_save( $post_id ) {
     $pktitle = array();
     $pktitle['ID'] = $post_id;
     $vuosi = get_the_terms( $post_id, 'vuosi' );
-  
+
     if ( get_post_type() == 'poytakirjat' ) {
-    $pktitle['post_title'] = 'Pöytäkirja ' . get_post_meta( $post_id, 'pk_numero', true ) . '/' . $vuosi[0]->name;
+        $pktitle['post_title'] = 'Pöytäkirja ' . get_post_meta( $post_id, 'pk_numero', true ) . '/' . $vuosi[0]->name;
     }
-    
+
     remove_action( 'save_post', 'wpark_pk_meta_save' );
     wp_update_post($pktitle);
     add_action( 'save_post', 'wpark_pk_meta_save' );
@@ -315,18 +339,26 @@ add_action( 'admin_menu', 'wpark_pk_add_help_page' );
 function wpark_pk_help_cb() {
 ?>
     <div class="help-page">
-        <h1>Ohjeet pöytäkirjojen lisäämiseen</h1>
+        <h1>Ohjeet pöytäkirjojen hallintaan</h1>
+        <h3>Pöytäkirjan lisääminen</h3>
+        <p>Sinulla tulisi olla pöytäkirjan PDF-tiedosto tietokoneellasi ennen aloitusta</p>
         <ol type="1">    
-            <li>Aseta otsikko muodossa "Pöytäkirja järjestysnumero/vuosi" esim. "Pöytäkirja 1/2018"</li>
-            <li>Aseta järjestysnumero muodossa "järjestysnumero/vuosi" esim. "1/2018"</li>
-            <li>Valitse päivämäärä</li>
-            <li>Valitse pdf-tiedosto, pidä valintaikkunan kentät vakiona</li>
+            <li>Valitse järjestysnumero</li>
+            <li>Valitse "Kokouksen päivämäärä" kentästä avautuvasta kalenterista kokouksen päivämäärä</li>
+            <li>Valitse vuosi (jona kokous pidettiin) kategorisointia varten</li>
+            <li>Valitse pöytäkirjan tyyppi (kts. kohta "Tyypeistä")</li>
             <li>Valitse saako pöytäkirjaa kommentoida</li>
-            <li>Valitse vuosi (vain yksi)</li>
-            <li>Valitse tyyppi (vain yksi)</li>
             <li>Paina "Julkaise"</li>
             <li>Valmista! Käy vielä tarkistamassa että lisäämäsi pöytäkirja näkyy oikein</li>
         </ol>
+
+        <h3>Tyyppien ja vuosien hallinta</h3>
+        <p>Tyyppejä voi lisätä tarpeen mukaan Pöytäkirjat->Tyypit -valikosta. Vuosia vastaavasta. Ainoa täytettävä kenttä on "Nimi". Muita ei tarvitse täyttää. Nimen täyttämisen jälkeen paina "Lisää uusi Tyyppi/Vuosi"-näppäintä ja uusi vuosi/tyyppi on käytettävissä pöytäkirjan lisäyssivulla</p>
+
+        <h3>Tyypeistä</h3>
+        <p>Hallituksen kokousten pöytäkirjojen tyyppi on "Hallitus"</p>
+        <p>Syyskokouksen, Kevätkokouksen, ylimääräisten kokousten ym. tyyppi on "Yhdistys"</p>
+        <p>Toimikuntien kokousten pöytäkirjojen tyyppi on toimikunnan nimi, esim. "WWW-toimikunta"</p>
     </div>
 
 <?php    
