@@ -39,17 +39,26 @@ add_action( 'admin_enqueue_scripts', 'wpark_admin_enqueue_scripts' );
 /* Tyylien ja javascriptin lataus fronttiin */
 
 function wpark_front_enqueue_scripts() {
+    global $typenow;
 
     wp_enqueue_style( 'wpark-front-css', plugins_url( 'css/front-poytakirjat.css', __FILE__ ) );
     wp_enqueue_style( 'hover-master-css', plugins_url( 'assets/hover.css', __FILE__ ) );
-    wp_enqueue_style( 'image-hover-css', plugins_url( 'assets/imagehover.min.css', __FILE__ ) );
-    wp_enqueue_style( 'imagehoveranim-css', plugins_url( 'assets/imagehoveranim.css', __FILE__ ) );
+    wp_enqueue_style( 'animatism-css', plugins_url( 'assets/animatism.css', __FILE__ ) );
     wp_enqueue_style( 'buttons-css', plugins_url( 'assets/buttons.css', __FILE__ ) );
     wp_enqueue_style( 'datatables-css', plugins_url( 'assets/datatables.min.css', __FILE__ ) );
 //    wp_enqueue_script( 'w3js', plugins_url( 'assets/w3.js', __FILE__ ),  true );
     wp_enqueue_script( 'datatables-js', plugins_url( 'assets/datatables.min.js', __FILE__ ), array( 'jquery' ), true );
-    wp_enqueue_script( 'font-awesome', plugins_url( 'assets/fontawesome-all.js', __FILE__ ),  true );
     wp_enqueue_script( 'wpark-front-js', plugins_url( 'js/front-poytakirjat.js', __FILE__ ),  true );
+    
+    if ( is_singular( 'poytakirjat' )  ) {
+
+        wp_enqueue_style( 'font-awesome-legacy', '//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'  );
+
+    } else {
+
+        wp_enqueue_script( 'font-awesome', plugins_url( 'assets/fontawesome-all.js', __FILE__ ),  true );    
+
+    }
 }
 add_action( 'wp_enqueue_scripts', 'wpark_front_enqueue_scripts' );
 

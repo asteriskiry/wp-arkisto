@@ -179,7 +179,7 @@ $id = $taxonomy.'-'.$term->term_id;?>
 <?php
 }
 
-/* Pöytäkirjojen lisäyssivun meta boxi (Järjestysnum, pvm) */
+/* Pöytäkirjojen lisäyssivun meta boxit (Järjestysnum, pvm, helppi) */
 
 function wpark_pk_add_metabox() {
 
@@ -357,7 +357,7 @@ function wpark_pk_help_cb() {
 
         <h3>Tyypeistä</h3>
         <p>Hallituksen kokousten pöytäkirjojen tyyppi on "Hallitus"</p>
-        <p>Syyskokouksen, Kevätkokouksen, ylimääräisten kokousten ym. tyyppi on "Yhdistys"</p>
+        <p>Syyskokouksella ja kevätkokouksella on omat tyyppinsä, muut yhdistyksen kokoukset tyyppiin "Yhdistys"</p>
         <p>Toimikuntien kokousten pöytäkirjojen tyyppi on toimikunnan nimi, esim. "WWW-toimikunta"</p>
     </div>
 

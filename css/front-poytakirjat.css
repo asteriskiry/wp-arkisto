@@ -27,7 +27,9 @@
     color: #2c8f43;
     font-size: 1.1em;
 }
-
+#pk-taulukko {
+    padding-top: 10px;
+}
 .tooltip {
     position: relative;
     display: inline-block;
@@ -71,6 +73,20 @@
 .customtitle {
     padding-bottom: 20px;
 }
+input[type=search] {
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('../img/searchicon.png');
+    background-position: 5px 5px; 
+    background-repeat: no-repeat;
+    padding: 5px 5px 5px 30px;
+}
+input[type=search]:focus {
+    box-shadow: 0px 0px 3px 2px #caffd5;
+}
+
 /************************
  *      Single-sivu     *
  ************************/
@@ -93,26 +109,6 @@
     }
 }
 
-.pk-thumb a {
-    height: 100%;
-    width: 100%;
-    display: block;
-    border: 1px solid #2c8f43;
-    border-radius: 3px;
-    box-shadow: 2px 2px 3px #556b55;
-}
-.pk-thumb img {
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    -ms-transition: all 1s ease;
-    transition: all 1s ease;
-    -webkit-filter: blur(2px);
-}
-.pk-thumb img:hover {
-    -webkit-filter: blur(0px);
-    border-radius: 10px;
-}
 .pk-grid {
     display: flex;
     width: 100%;

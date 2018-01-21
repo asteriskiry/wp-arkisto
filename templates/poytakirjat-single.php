@@ -13,7 +13,18 @@ do_action( 'travelify_before_main_container' );
 ?>
 
 <div class="pk-single">
+<script>
+jQuery(function ($)  {
 
+            $(window).load(function() {
+
+                $('#loadOverlay').fadeOut('slow');
+
+            })
+
+        })
+</script>
+<link rel='stylesheet'   href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' type='text/css' media='all' />
 <?php
 
 /* Loop joka hakee tiedot */
@@ -32,19 +43,18 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
     $tyyppi = get_the_terms( $post->ID, 'tyyppi' );
 
     /* Generoidaan HTML */
-
     echo '<div class="pk-grid">';
     echo '<div class="pk-thumb">';
-    echo '<figure class="imghvr-fade">';
-    echo '<img src="' . $thumbnail . '"><figcaption>dildoson</figcaption><a href="' . $pdfurl . '"></a>';
-    echo '</figure>';
+    echo '<div class="btn26">';
+    echo '<img src="' . $thumbnail . '"><div class="ovrly"></div><div class="anim-buttons"><a class="fa fa-file-pdf-o" href="' . $pdfurl . '"></a></div>';
+    echo '</div>';
     echo '</div>';
     echo '<div class="pk-single-meta">';
     echo '<div class="pk-buttons-left">';
-    echo previous_post_link('%link', '<i class="fas fa-angle-double-left"></i> Edellinen');
+    echo previous_post_link('%link', '<i class="fa fa-angle-double-left"></i> Edellinen');
     echo '</div>';
     echo '<div class="pk-buttons-right">';
-    echo next_post_link('%link', 'Seuraava <i class="fas fa-angle-double-right"></i>');
+    echo next_post_link('%link', 'Seuraava <i class="fa fa-angle-double-right"></i>');
     echo '</div>';
     echo '<br>';
     echo '<div class="pk-single-meta-content">';
@@ -59,7 +69,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
     echo '<td><strong>Järjestysnumero</strong></td><td>' . $jn . '</td>';
     echo '</tr>';
     echo '</table>';
-    echo '<a class="hvr-grow"href="' . $pdfurl . '">PDF-tiedosto <i class="fas fa-file-pdf" ></i></a>';
+    echo '<a class="hvr-grow"href="' . $pdfurl . '">PDF-tiedosto <i class="fa fa-file-pdf-o"></i></a>';
     echo '</div>';
     echo '<div class="pk-buttons">';
     echo '<a href="' . get_site_url() . '/' . get_post_type($post->ID) . '">Takaisin selailuun</a>'; 
