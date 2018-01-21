@@ -35,7 +35,9 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
 
     echo '<div class="pk-grid">';
     echo '<div class="pk-thumb">';
-    echo '<a href="' . $pdfurl . '"><img src="' . $thumbnail . '"></img></a>';
+    echo '<figure class="imghvr-fade">';
+    echo '<img src="' . $thumbnail . '"><figcaption>dildoson</figcaption><a href="' . $pdfurl . '"></a>';
+    echo '</figure>';
     echo '</div>';
     echo '<div class="pk-single-meta">';
     echo '<div class="pk-buttons-left">';

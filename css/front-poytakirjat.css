@@ -27,6 +27,7 @@
     color: #2c8f43;
     font-size: 1.1em;
 }
+
 .tooltip {
     position: relative;
     display: inline-block;
@@ -49,6 +50,13 @@
     display: flex;
     font-size: 1.3em;
     text-align: center;
+    align-content: space-between;
+    flex-wrap: wrap;
+}
+.pk-recent {
+    flex: 23%;
+    max-width: 23%;
+    padding: 0 4px;
 }
 .pk-flex-recent img {
     border: 1px solid #8e9e86;

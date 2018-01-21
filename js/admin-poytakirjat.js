@@ -1,6 +1,9 @@
-// Javascriptit pöytäkirjojen admin-sivuille
+/**
+ * Javascriptit admin-sivuille
+ **/
 
-// Päivämäärän valitsin
+/* Päivämäärän valitsin */
+
 jQuery(document).ready(function() {
     jQuery( '.datepicker'  ).datepicker();
     jQuery( '.datepicker'  ).datepicker( "option", "showAnim", "slideDown" );

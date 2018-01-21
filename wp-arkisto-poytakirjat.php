@@ -313,7 +313,7 @@ function wpark_load_templates( $original_template ) {
         return plugin_dir_path( __FILE__ ) . 'templates/poytakirjat-archive.php';
     } elseif(is_singular('poytakirjat')) {
         return plugin_dir_path( __FILE__ ) . 'templates/poytakirjat-single.php';
-    }else{
+    } else {
         return get_page_template();
     }
     return $original_template;
@@ -361,6 +361,6 @@ function wpark_pk_help_cb() {
         <p>Toimikuntien kokousten pöytäkirjojen tyyppi on toimikunnan nimi, esim. "WWW-toimikunta"</p>
     </div>
 
-<?php    
+<?php 
 }
 
