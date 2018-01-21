@@ -226,7 +226,7 @@ function wpark_pk_callback( $post ) {
         <label for="pk-paivamaara" class="pk-row-title">Kokouksen päivämäärä</label>
     </div>
     <div class="meta-td">
-        <input type="date" pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}" class="pk-row-content datepicker" required size=8  name="pk_paivamaara" id="pk-paivamaara" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_paivamaara'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_paivamaara'][0]  ); ?>"/>
+        <input type="date" pattern="[0-9]{1-2}.[0-9]{1-2}.[0-9]{4}" class="pk-row-content datepicker" required size=8  name="pk_paivamaara" id="pk-paivamaara" value="<?php if ( ! empty ( $wpark_pk_stored_meta['pk_paivamaara'] ) ) echo esc_attr( $wpark_pk_stored_meta['pk_paivamaara'][0]  ); ?>"/>
     </div>
 </div>
 

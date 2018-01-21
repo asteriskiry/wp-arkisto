@@ -44,6 +44,7 @@ dropdown.onchange = onCatChange;
 
 $args_by_year = array(
     'post_type' 		=> 'poytakirjat',
+    'posts_per_page'        => -1,
     'tax_query' 		=> array(
         array(
             'taxonomy' => 'vuosi',
@@ -116,7 +117,6 @@ while ( $pk_by_year->have_posts() ) : $pk_by_year->the_post();
     $thumbnail = $custom_pdf_data[0]['tnSmall']; 
 
     /* HTML: dynaamiset kentät*/
-
     echo '<tr class="item">';
     echo '<td><div class="tooltip"><a class="hvr-grow" href="' . $slug . '">' . $title . ' <i class="fas fa-file-pdf" ></i></a><img class="tooltipimg" src="' . $thumbnail  . '"></div></td>';
     echo '<td> ' . $jn  . '</td>';
@@ -131,7 +131,6 @@ endif;
 ?>
 </div>
 </div>
-
 <?php
 /* travelify_after_main_container hook */
 do_action( 'travelify_after_main_container' );
