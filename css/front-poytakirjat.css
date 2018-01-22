@@ -59,9 +59,14 @@
     flex: 23%;
     max-width: 23%;
     padding: 0 4px;
+    margin-bottom: 15px;
+}
+.pk-recent img {
+    border: 0px solid #8e9e86;
+    box-shadow: 3px 3px 5px grey;
 }
 .pk-flex-recent img {
-    border: 1px solid #8e9e86;
+    border: 0px solid #8e9e86;
 }
 .pk-flex-recent img:hover {
  /*   box-shadow: 2px 2px 4px #556b55; */

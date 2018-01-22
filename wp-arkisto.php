@@ -71,7 +71,7 @@ function wpark_front_enqueue_scripts() {
         wp_enqueue_style( 'wpark-front-css', plugins_url( 'css/front-poytakirjat.css', __FILE__ ) );
     }
     
-    if ( is_singular( 'poytakirjat' ) || is_singular( 'tentit' )  ) {
+    if ( get_query_var( 'post_type' ) == 'poytakirjat' || is_singular( 'tentit' )  ) {
 
         wp_enqueue_style( 'font-awesome-legacy', '//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'  );
 
