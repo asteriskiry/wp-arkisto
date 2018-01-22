@@ -48,7 +48,7 @@ function wpark_t_register_post_type() {
         'capability_type'       => 'post',
         'map_meta_cap'          => true,
         // 'capabilities'       => array(),
-        // 'taxonomies'            => array( 'kurssi', ),
+        'taxonomies'            => array( 'kurssi', ),
         'rewrite'               => array( 
             'slug'                  => $slug,
             'with_front'            => true,
