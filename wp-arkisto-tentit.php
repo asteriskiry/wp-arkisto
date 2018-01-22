@@ -140,25 +140,121 @@ $id = $taxonomy.'-'.$term->term_id;?>
 
 /* Tenttien lisäyssivun meta box (pvm, helppi) */
 
-function wpark_pk_add_metabox() {
+function wpark_t_add_metaboxes() {
 
     add_meta_box(
-        'wpark_pk_meta',
-        'Pöytäkirjan tiedot',
-        'wpark_pk_callback',
-        'poytakirjat',
+        'wpark_t_meta',
+        'Tentin tiedot',
+        'wpark_t_callback',
+        'tentit',
         'normal',
         'high'
     );
 
     add_meta_box(
-        'wpark_pk_help',
+        'wpark_t_help',
         'Tiedote',
-        'wpark_pk_help_callback',
-        'poytakirjat',
+        'wpark_t_help_callback',
+        'tentit',
         'normal',
         'high'
     );
 } 
 
-add_action('add_meta_boxes', 'wpark_pk_add_metabox');
+add_action('add_meta_boxes', 'wpark_t_add_metaboxes');
+
+/* Lisäyssivun html:n generointi */
+
+function wpark_t_callback( $post ) {
+    wp_nonce_field( basename( __FILE__  ), 'wpark_t_nonce' );
+    $wpark_t_stored_meta = get_post_meta( $post->ID );   
+?>
+
+<div class="meta-row">
+    <div class="meta-th">
+        <label for="t-paivamaara" class="t-row-title">Tentin päivämäärä</label>
+    </div>
+    <div class="meta-td">
+        <input type="date" pattern="[0-9]{1-2}.[0-9]{1-2}.[0-9]{4}" class="t-row-content datepicker" required size=8  name="t_paivamaara" id="t-paivamaara" value="<?php if ( ! empty ( $wpark_t_stored_meta['t_paivamaara'] ) ) echo esc_attr( $wpark_t_stored_meta['t_paivamaara'][0]  ); ?>"/>
+    </div>
+</div>
+
+<?php
+
+}
+
+function wpark_t_help_callback( $post ) {
+    echo '<div class="meta-help">Jos et ole ihan varma mitä teet, katso <a href="' . admin_url( 'edit.php?post_type=tentit&page=ohjeet' ) . '">ohjeet</a></div>';
+}
+
+/* Metatietojen tallennus */
+
+function wpark_t_meta_save( $post_id ) {
+    $is_autosave = wp_is_post_autosave( $post_id  );
+    $is_revision = wp_is_post_revision( $post_id  );
+    $is_valid_nonce = ( isset ( $_POST[ 'wpark_t_nonce' ] ) && wp_verify_nonce( $_POST[ 'wpark_t_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
+
+    if ( $is_autosave || $is_revision || !$is_valid_nonce ) {
+        return;
+    }
+    if ( isset ( $_POST[ 't_paivamaara' ] ) ) {
+        update_post_meta( $post_id, 't_paivamaara', sanitize_text_field( $_POST[ 't_paivamaara' ] ) );
+    }
+}
+
+add_action( 'save_post', 'wpark_t_meta_save' );
+
+/* Templojen lataus */
+
+function wpark_t_load_templates( $original_template ) {
+    
+    if(is_tax('kurssi')) {
+        return plugin_dir_path( __FILE__ ) . 'templates/kurssit-archive.php';
+    }    
+    if ( get_query_var( 'post_type' ) !== 'tentit' ) {
+        return $original_template;
+    }
+    if ( is_archive() || is_search() ) {
+        return plugin_dir_path( __FILE__ ) . 'templates/tentit-archive.php';
+    } elseif(is_singular('tentit')) {
+        return plugin_dir_path( __FILE__ ) . 'templates/tentit-single.php';
+    } else {
+        return get_page_template();
+    }
+    return $original_template;
+}
+add_action( 'template_include', 'wpark_t_load_templates' );
+
+/* Ohjeet-sivu */
+
+function wpark_t_add_help_page() {
+
+    add_submenu_page( 
+        'edit.php?post_type=tentit',
+        'Tenttiarkiston ohjeet',
+        'Ohjeet',
+        'manage_options',
+        't-ohjeet',
+        'wpark_t_help_cb'
+    );
+}
+
+add_action( 'admin_menu', 'wpark_t_add_help_page' ); 
+
+function wpark_t_help_cb() {
+?>
+    <div class="help-page">
+        <h1>Ohjeet tenttiarkiston hallintaan</h1>
+        <h3>Tentin lisääminen</h3>
+        <p>Sinulla tulisi olla tentistä PDF-tiedosto tietokoneellasi ennen aloitusta</p>
+        <ol type="1">    
+            <li>Ohjeita</li>
+        </ol>
+
+        <h3>Kurssien hallinta</h3>
+        <p>Ohjeita</p>
+
+    </div>
+
+<?php 
+}

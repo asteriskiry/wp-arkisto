@@ -12,7 +12,8 @@
 do_action( 'travelify_before_main_container' );
 ?>
 
-<div class="pk-single">
+<div class="tentit-single">
+<h1>Tentit single</h1>
 <script>
 jQuery(function ($)  {
 
@@ -37,9 +38,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
     $thumbnail = $custom_pdf_data[0]['tnBig'];
     $pdfurl = $custom_pdf_data[0]['src'];
     $slug = get_permalink();
-    $pm = get_post_meta( $post->ID, 'pk_paivamaara', true );    
-    $jn = get_post_meta( $post->ID, 'pk_numero', true );
-    $tyyppi = get_the_terms( $post->ID, 'tyyppi' );
+    $pm = get_post_meta( $post->ID, 't_paivamaara', true );    
 
     /* Generoidaan HTML */
 
@@ -62,11 +61,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
     echo '<tr>';
     echo '<td><strong>Nimi</strong></td><td>' . apply_filters( 'the_title', $post->post_title ) . '</td>';
     echo '</tr><tr>';
-    echo '<td><strong>Tyyppi</strong></td><td>' .  $tyyppi[0]->name . '</td>';
-    echo '</tr><tr>';
     echo '<td><strong>Päivämäärä</strong></td><td>' . $pm . '</td>';
-    echo '</tr><tr>';
-    echo '<td><strong>Järjestysnumero</strong></td><td>' . $jn . '</td>';
     echo '</tr>';
     echo '</table>';
     echo '<a class="hvr-grow"href="' . $pdfurl . '">PDF-tiedosto <i class="fa fa-file-pdf-o"></i></a>';
@@ -77,7 +72,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
     echo '</div>';
 
     /* Kommenttiosio */
-
+    
     comments_template();
 
     echo '</div>';

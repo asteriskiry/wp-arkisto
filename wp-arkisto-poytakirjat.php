@@ -262,7 +262,6 @@ function wpark_pk_callback( $post ) {
 
 function wpark_pk_help_callback( $post ) {
     echo '<div class="meta-help">Jos et ole ihan varma mitä teet, katso <a href="' . admin_url( 'edit.php?post_type=poytakirjat&page=ohjeet' ) . '">ohjeet</a></div>';
-    echo '<style type="text/css"> #titlewrap { display: none; }</style>';
 }
 
 /* Metatietojen tallennus */
@@ -326,10 +325,10 @@ function wpark_pk_add_help_page() {
 
     add_submenu_page( 
         'edit.php?post_type=poytakirjat',
-        'Ohjeet',
+        'Pöytäkirjojen ohjeet',
         'Ohjeet',
         'manage_options',
-        'ohjeet',
+        'pk-ohjeet',
         'wpark_pk_help_cb'
     );
 }

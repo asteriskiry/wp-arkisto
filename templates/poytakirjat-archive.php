@@ -9,7 +9,7 @@
 
 <?php
 /* travelify_before_main_container hook */
-//do_action( 'travelify_before_main_container' );
+do_action( 'travelify_before_main_container' );
 ?>
 
 <div id="pk">
