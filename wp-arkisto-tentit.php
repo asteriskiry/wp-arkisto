@@ -175,7 +175,7 @@ function wpark_t_callback( $post ) {
         <label for="t-paivamaara" class="t-row-title">Tentin päivämäärä</label>
     </div>
     <div class="meta-td">
-        <input type="date" pattern="[0-9]{1,2}.[0-9]{1,2}.[0-9]{4}" class="t-row-content datepicker" required size=8  name="t_paivamaara" id="t-paivamaara" value="<?php if ( ! empty ( $wpark_t_stored_meta['t_paivamaara'] ) ) echo esc_attr( $wpark_t_stored_meta['t_paivamaara'][0]  ); ?>"/>
+        <input type="text" pattern="[0-9]{1,2}.[0-9]{1,2}.[0-9]{4}" class="t-row-content datepicker" required size=8  name="t_paivamaara" id="t-paivamaara" value="<?php if ( ! empty ( $wpark_t_stored_meta['t_paivamaara'] ) ) echo esc_attr( $wpark_t_stored_meta['t_paivamaara'][0]  ); ?>"/>
     </div>
 </div>
 
