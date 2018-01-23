@@ -72,9 +72,9 @@ if ($args_by_year['tax_query'][0]['terms'] == '') {
         $c_pdf_data_recent = get_post_meta($recent["ID"], 'custom_pdf_data');
         $pvm_recent = get_post_meta($recent["ID"], 'pk_paivamaara', true);
         $tn = $c_pdf_data_recent[0]['tnMed'];
-        echo '<div class="pk-recent">';
+        //echo '<div class="pk-recent">';
         echo '<div class="cptn11">';
-		echo '<img src="' . $tn . '"><div class="ovrly"><div class="cptn"><div><h3>' . $recent["post_title"] . '</h3><p>' . $pvm_recent . '</p></div><a class="fa fa-arrow-right" href="' . get_permalink($recent["ID"]) . '"></a></div></div></div></div>';
+		echo '<img src="' . $tn . '"><div class="ovrly"><div class="cptn"><div><h3>' . $recent["post_title"] . '</h3><p>' . $pvm_recent . '</p></div><a class="fa fa-arrow-right" href="' . get_permalink($recent["ID"]) . '"></a></div></div></div>';
     }
 
 	wp_reset_query();
