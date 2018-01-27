@@ -110,3 +110,36 @@ function wpark_add_dashboard_widget () {
 }
  
 add_action( 'wp_dashboard_setup', 'wpark_dashboard' );
+
+/* Luodaan sivut fronttiin */
+
+function wpark_add_pages () {
+		$pk_query = new WP_Query('pagename=poytakirjat');	
+		if(empty($pk_query->posts) && empty($pk_query->queried_object) && get_option('poytakirjat-created') == false) {
+			$poytakirjat_page = array(
+				'post_title' => 'Pöytäkirjat',
+				'post_name' => 'poytakirjat',
+				'post_status' => 'publish',
+				'post_author' => 1,
+				'post_type' => 'page',
+				'comment_status' => 'closed'
+			);
+			$poytakirjat_post_id = wp_insert_post( $poytakirjat_page );
+			update_option('poytakirjat-created', true);
+        }
+		$t_query = new WP_Query('pagename=tentit');	
+		if(empty($t_query->posts) && empty($t_query->queried_object) && get_option('tentit-created') == false) {
+			$tentit_page = array(
+				'post_title' => 'Tenttiarkisto',
+				'post_name' => 'tentit',
+				'post_status' => 'publish',
+				'post_author' => 1,
+				'post_type' => 'page',
+				'comment_status' => 'closed'
+			);
+			$tentit_post_id = wp_insert_post( $tentit_page );
+			update_option('tentit-created', true);
+        }
+}
+
+add_action( 'admin_init', 'wpark_add_pages'  );
