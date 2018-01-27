@@ -75,11 +75,6 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
     echo '<a href="' . get_site_url() . '/' . get_post_type($post->ID) . '">Takaisin selailuun</a>'; 
     echo '</div>';
     echo '</div>';
-
-    /* Kommenttiosio */
-
-    comments_template();
-
     echo '</div>';
 endwhile; endif; ?>
 </div>

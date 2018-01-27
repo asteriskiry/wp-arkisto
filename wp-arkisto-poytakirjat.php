@@ -56,7 +56,7 @@ function wpark_pk_register_post_type() {
         ),
         'supports'              => array(
             'title',
-            'comments',
+            //'comments',
             // 'editor',
             // 'custom-fields',
         )
