@@ -50,14 +50,14 @@ function wpark_t_register_post_type() {
         // 'capabilities'       => array(),
         'taxonomies'            => array( 'kurssi', ),
         'rewrite'               => array( 
-            'slug'                  => $slug,
+            'slug'                  => 'tenttiarkisto',
             'with_front'            => true,
             'pages'                 => true,
             'feeds'                 => false,
         ),
         'supports'              => array(
             'title',
-            'comments',
+            //'comments',
             // 'editor',
             // 'custom-fields',
         )
@@ -200,6 +200,18 @@ function wpark_t_meta_save( $post_id ) {
     if ( isset ( $_POST[ 't_paivamaara' ] ) ) {
         update_post_meta( $post_id, 't_paivamaara', sanitize_text_field( $_POST[ 't_paivamaara' ] ) );
     }
+
+    $t_title = array();
+    $t_title['ID'] = $post_id;
+    $kurssi = get_the_terms( $post_id, 'kurssi' );
+
+    if ( get_post_type() == 'tentit' ) {
+        $t_title['post_title'] = $kurssi[0]->name . ' ' . get_post_meta( $post_id, 't_paivamaara', true );
+    }
+
+    remove_action( 'save_post', 'wpark_t_meta_save' );
+    wp_update_post($t_title);
+    add_action( 'save_post', 'wpark_t_meta_save' );
 }
 
 add_action( 'save_post', 'wpark_t_meta_save' );
@@ -258,3 +270,5 @@ function wpark_t_help_cb() {
 
 <?php 
 }
+
+

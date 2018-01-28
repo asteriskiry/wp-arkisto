@@ -1,24 +1,25 @@
 /**
- * Javascripit fronttiin
+ * Javascripit tenttiarkiston fronttiin
  **/
 
-/* Pöytäkirjojen sorttausta varten */
+/* Kurssien sorttausta varten */
 
 jQuery(function ($)  {
-    $('#pk-taulukko').DataTable({
+    $('#t-taulukko').DataTable({
         "pageLength": 25,
         "language": {
             "sProcessing":    "Käsitellään...",
-            "sLengthMenu":    "Näytä _MENU_ pöytäkirjaa",
-            "sZeroRecords":   "Yhtäkään pöytäkirjaa ei löytynyt",
+            "sLengthMenu":    "Näytä _MENU_ kurssia",
+            "sZeroRecords":   "Yhtäkään kurssia ei löytynyt",
             "sEmptyTable":    "Ei löytynyt",
-            "sInfo":          "Näytetään pöytäkirjat _START_-_END_ yhteensä _TOTAL_:stä pöytäkirjasta",
-            "sInfoEmpty":     "Näytetään pöytäkirjat 0-0 yhteensä 0:sta pöytäkirjasta",
-            "infoFiltered":   "(Haettu _MAX_:stä pöytäkirjasta)",
+            "sInfo":          "Näytetään kurssit _START_-_END_ yhteensä _TOTAL_:stä kurssista",
+            "sInfoEmpty":     "Näytetään kurssit 0-0 yhteensä 0:sta kurssista",
+            "infoFiltered":   "(Haettu _MAX_:stä kurssista)",
             "decimal":        ",",
             "thousands":      "",
             "sInfoPostFix":   "",
-            "sSearch":        "Haku:",
+            "sSearch":        "_INPUT_",
+            "searchPlaceholder": "Etsi..",
             "sUrl":           "",
             "sInfoThousands":  ",",
             "sLoadingRecords": "Ladataan...",

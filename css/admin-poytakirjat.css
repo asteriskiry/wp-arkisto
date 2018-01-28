@@ -27,3 +27,27 @@
 #titlewrap {
     display: none;
 }
+body.taxonomy-vuosi .term-description-wrap {
+    display:none;
+}
+body.taxonomy-vuosi .term-parent-wrap {
+    display:none;
+}
+body.taxonomy-vuosi .term-slug-wrap {
+    display:none;
+}
+body.taxonomy-vuosi .column-description {
+    display: none;
+}
+body.taxonomy-tyyppi .term-description-wrap {
+    display:none;
+}
+body.taxonomy-tyyppi .term-parent-wrap {
+    display:none;
+}
+body.taxonomy-tyyppi .term-slug-wrap {
+    display:none;
+}
+body.taxonomy-tyyppi .column-description {
+    display: none;
+}

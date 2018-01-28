@@ -36,6 +36,10 @@ function wpark_admin_enqueue_scripts() {
         wp_localize_script( 'wpark_pdf_uploader', 'pdfUploads', array( 'pdfdata' => get_post_meta( get_the_ID(), 'custom_pdf_data', true  )  )  );
     }
 
+    if ( get_current_screen() ->taxonomy === "vuosi" || get_current_screen() ->taxonomy === "tyyppi" ) {
+        wp_enqueue_style( 'wpark-admin-css', plugins_url( 'css/admin-poytakirjat.css', __FILE__ ) );
+    }
+
     /* Tenttiarkistolle */
 
     if ( ( $pagenow == 'post.php' || $pagenow == 'post-new.php' ) && $typenow == 'tentit' ) {
@@ -45,6 +49,10 @@ function wpark_admin_enqueue_scripts() {
         wp_enqueue_style( 'jquery-style', plugins_url( 'assets/jquery-ui-theme-asteriski/jquery-ui.css', __FILE__ ) );
         wp_enqueue_script( 'wpark-t-pdf-uploader', plugin_dir_url( __FILE__  ) . 'js/admin-tentit-uploader.js', array('jquery', 'media-upload'), '0.0.2', true  );
         wp_localize_script( 'wpark-t-pdf-uploader', 'pdfUploads', array( 'pdfdata' => get_post_meta( get_the_ID(), 'custom_pdf_data', true  )  )  );
+    }
+
+    if ( get_current_screen() ->taxonomy === "kurssi" ) {
+        wp_enqueue_style( 'wpark-t-admin-css', plugins_url( 'css/admin-tentit.css', __FILE__ ) );
     }
 }
 
@@ -86,6 +94,13 @@ function wpark_front_enqueue_scripts() {
 
         wp_enqueue_script( 'wpark-t-front-js', plugins_url( 'js/front-tentit.js', __FILE__ ),  true );
         wp_enqueue_style( 'wpark-t-front-css', plugins_url( 'css/front-tentit.css', __FILE__ ) );
+    }
+
+    if ( get_query_var( 'taxonomy' ) == 'kurssi' ) {
+
+        wp_enqueue_style( 'wpark-t-front-css', plugins_url( 'css/front-tentit.css', __FILE__ ) );
+        wp_enqueue_script( 'wpark-t-front-js', plugins_url( 'js/front-tentit.js', __FILE__ ),  true );
+        wp_enqueue_script( 'wpark-t-kurssit-js', plugins_url( 'js/kurssit-archive.js', __FILE__ ),  true );
     }
 
 }
@@ -131,7 +146,7 @@ function wpark_add_pages () {
 		if(empty($t_query->posts) && empty($t_query->queried_object) && get_option('tentit-created') == false) {
 			$tentit_page = array(
 				'post_title' => 'Tenttiarkisto',
-				'post_name' => 'tentit',
+				'post_name' => 'tenttiarkisto',
 				'post_status' => 'publish',
 				'post_author' => 1,
 				'post_type' => 'page',

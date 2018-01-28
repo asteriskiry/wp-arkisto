@@ -1,5 +1,5 @@
 /**
- * Javascripit fronttiin
+ * Javascripit pöytäkirjojen fronttiin
  **/
 
 /* Pöytäkirjojen sorttausta varten */

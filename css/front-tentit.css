@@ -1,16 +1,35 @@
 /**
- * Pöytäkirjojen frontin tyylit
+ * Tenttien frontin tyylit
  **/
 
-/*********************
- *    Archive-sivu   *
- *********************/
+input[type=search] {
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('../img/search.png');
+    background-position: 5px 5px; 
+    background-repeat: no-repeat;
+    padding: 5px 5px 5px 30px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    width: 60%
+}
+input[type=search]:focus {
+    box-shadow: 0px 0px 3px 2px #caffd5;
+    width: 90%;
+    background-color: #d2fadf;
+}
 
-.pk-indeksit {
+/*************************
+ * Tenttien archive-sivu *
+ *************************/
+
+.t-indeksit {
     background-color: #2c8f43 !important;
     color: #fff;
 }
-.pk-indeksit:hover {
+.t-indeksit:hover {
     background-color: #247c39 !important;
     color: #fff;
     -webkit-transition: all .3s ease;
@@ -19,16 +38,57 @@
     -ms-transition: all .3s ease;
     transition: all .3s ease;
 }
-#pk-dropdown-li {
+#t-dropdown-li {
     list-style-type: none;
     margin-bottom: 10px;
 }
-#pk-taulukko a {
+#t-taulukko a {
     color: #2c8f43;
     font-size: 1.1em;
 }
-#pk-taulukko {
+#t-taulukko {
     padding-top: 10px;
+}
+.page-title-wrap {
+    display: none;
+}
+.customtitle {
+    padding-bottom: 20px;
+}
+
+/*************************
+ * Kurssien archive-sivu *
+ *************************/
+
+.t-k-indeksit {
+    background-color: #2c8f43 !important;
+    color: #fff;
+}
+.t-k-indeksit:hover {
+    background-color: #247c39 !important;
+    color: #fff;
+    -webkit-k-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    transition: all .3s ease;
+}
+#t-k-dropdown-li {
+    list-k-style-type: none;
+    margin-bottom: 10px;
+}
+#t-k-taulukko a {
+    color: #2c8f43;
+    font-k-size: 1.1em;
+}
+#t-k-taulukko {
+    padding-top: 10px;
+}
+.page-title-wrap {
+    display: none;
+}
+.customtitle {
+    padding-bottom: 20px;
 }
 .tooltip {
     position: relative;
@@ -48,44 +108,6 @@
 .tooltip:hover .tooltipimg {
     opacity: 0.8;
 }
-.pk-flex-recent {
-    display: flex;
-    font-size: 1.3em;
-    text-align: center;
-    align-content: space-between;
-    flex-wrap: wrap;
-}
-.pk-recent {
-    flex: 23%;
-    max-width: 23%;
-    padding: 0 4px;
-}
-.pk-flex-recent img {
-    border: 1px solid #8e9e86;
-}
-.pk-flex-recent img:hover {
- /*   box-shadow: 2px 2px 4px #556b55; */
-    transition: 0.7s; 
-}
-.page-title-wrap {
-    display: none;
-}
-.customtitle {
-    padding-bottom: 20px;
-}
-input[type=search] {
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: white;
-    background-image: url('../img/searchicon.png');
-    background-position: 5px 5px; 
-    background-repeat: no-repeat;
-    padding: 5px 5px 5px 30px;
-}
-input[type=search]:focus {
-    box-shadow: 0px 0px 3px 2px #caffd5;
-}
 
 /************************
  *      Single-sivu     *
@@ -93,23 +115,23 @@ input[type=search]:focus {
 
 
 @media screen and (max-width: 830px) {
-    .pk-single-meta  {
+    .t-single-meta  {
         width: 100%;
     }
-    .pk-thumb {
+    .t-thumb {
         width: 100%;
     }
 }
 @media screen and (min-width: 831px) {
-    .pk-single-meta  {
+    .t-single-meta  {
         width: 46%;
     }
-    .pk-thumb {
+    .t-thumb {
         width: 46%;
     }
 }
 
-.pk-grid {
+.t-grid {
     display: flex;
     width: 100%;
     height: 100%;
@@ -117,21 +139,21 @@ input[type=search]:focus {
     justify-content: center;
     align-items: stretch;
 }
-.pk-single-meta {
+.t-single-meta {
     text-align: center;
     margin: 15px;
 }
-.pk-thumb {
+.t-thumb {
     margin: 15px;
 }
-.pk-single-meta-content {
+.t-single-meta-content {
     height: 90%;
     margin: 0;
 }
 
 /* Napit ja animaatiot */
 
-.pk-buttons a {
+.t-buttons a {
     background-color: #2c8f43;
     color: white;
     width: 100%;
@@ -159,18 +181,18 @@ input[type=search]:focus {
     padding-left: 2.2em;
 
 }
-.pk-buttons a:visited {
+.t-buttons a:visited {
     color: #666666;
     color: white;
 }
-.pk-buttons a:hover, .pk-buttons a:focus {
+.t-buttons a:hover, .t-buttons a:focus {
     background-color: #35a64f;
     text-decoration: none;
     border-color: #fec04e;
     color: white;
     outline: none;
 }
-.pk-buttons a:active, .pk-buttons.active, .pk-buttons.is-active {
+.t-buttons a:active, .t-buttons.active, .t-buttons.is-active {
     text-shadow: 0 1px 0 rgba(255, 0, 0, 0.3);
     text-decoration: none;
     border-color: #cfcfcf;
@@ -182,15 +204,15 @@ input[type=search]:focus {
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.pk-buttons-left {
+.t-buttons-left {
     width: 50%;
     float: left;
 }
-.pk-buttons-right {
+.t-buttons-right {
     width: 50%;
     float: right;
 }
-.pk-buttons-left a {
+.t-buttons-left a {
     background-color: #2c8f43;
     color: white;
     width: 100%;
@@ -216,18 +238,18 @@ input[type=search]:focus {
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px transparent;
 }
-.pk-buttons-left a:visited {
+.t-buttons-left a:visited {
     color: #666666;
     color: white;
 }
-.pk-buttons-left a:hover, .pk-buttons-left a:focus {
+.t-buttons-left a:hover, .t-buttons-left a:focus {
     background-color: #35a64f;
     text-decoration: none;
     border-color: #fec04e;
     color: white;
     outline: none;
 }
-.pk-buttons-left a:active, .pk-buttons-left.active, .pk-buttons-left.is-active {
+.t-buttons-left a:active, .t-buttons-left.active, .t-buttons-left.is-active {
     text-shadow: 0 1px 0 rgba(255, 0, 0, 0.3);
     text-decoration: none;
     border-color: #cfcfcf;
@@ -241,7 +263,7 @@ input[type=search]:focus {
 
 /* Safari tuotti ongelmia joten nuolianimaatiot kommentoitu pois toistaiseksi
 
-.pk-buttons-left a:before {
+.t-buttons-left a:before {
     margin-top: -3px;
     position: absolute;
     left: 1em;
@@ -258,12 +280,12 @@ input[type=search]:focus {
     -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out;
 }
-.pk-buttons-left a:hover:before, .pk-buttons-left a:focus:before, .pk-buttons-left a:active:before {
+.t-buttons-left a:hover:before, .t-buttons-left a:focus:before, .t-buttons-left a:active:before {
     -webkit-transform: translateX(-4px);
     transform: translateX(-4px);
 }
 */
-.pk-buttons-right a {
+.t-buttons-right a {
     background-color: #2c8f43;
     color: white;
     font-weight: 300;
@@ -289,18 +311,18 @@ input[type=search]:focus {
     box-shadow: 0 0 1px transparent;
     padding-right: 2.2em;
 }
-.pk-buttons-right a:visited {
+.t-buttons-right a:visited {
     color: #666666;
     color: white;
 }
-.pk-buttons-right a:hover, .pk-buttons-right a:focus {
+.t-buttons-right a:hover, .t-buttons-right a:focus {
     background-color: #35a64f;
     text-decoration: none;
     border-color: #fec04e;
     color: white;
 outline: none; }
 
-.pk-buttons-right a:active, .pk-buttons-right.active, .pk-buttons-right.is-active {
+.t-buttons-right a:active, .t-buttons-right.active, .t-buttons-right.is-active {
     text-shadow: 0 1px 0 rgba(255, 0, 0, 0.3);
     text-decoration: none;
     border-color: #cfcfcf;
@@ -312,7 +334,7 @@ outline: none; }
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 /*
-.pk-buttons-right a:before {
+.t-buttons-right a:before {
     margin-top: -3px;
     content: "\f101";
     position: absolute;
@@ -330,7 +352,7 @@ outline: none; }
     transition-timing-function: ease-out;
 
 }
-.pk-buttons-right a:hover:before, .pk-buttons-right a:focus:before, .pk-buttons-right a:active:before {
+.t-buttons-right a:hover:before, .t-buttons-right a:focus:before, .t-buttons-right a:active:before {
     -webkit-transform: translateX(4px);
     transform: translateX(4px);
 }

@@ -13,9 +13,8 @@ do_action( 'travelify_before_main_container' );
 ?>
 
 <div id="tentit-archive">
-    <h1> Tentit archive </h1>
+    <h1 class="customtitle">Tenttiarkisto</h1>
 
-<div id="tentit-content">
 <?php
 
 $args = array( 'hide_empty=0' );
@@ -23,24 +22,33 @@ $args = array( 'hide_empty=0' );
 $terms = get_terms( 'kurssi', $args );
 if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
     $count = count( $terms );
-    $i = 0;
-    $term_list = '<p class="my_term-archive">';
-    foreach ( $terms as $term ) {
-        $i++;
-        $term_list .= '<a href="' . esc_url( get_term_link( $term ) ) . '" alt="' . esc_attr( sprintf( __( 'View all post filed under %s', 'my_localization_domain' ), $term->name ) ) . '">' . $term->name . '</a>';
-        if ( $count != $i ) {
-            $term_list .= ' &middot; ';
-        }
-        else {
-            $term_list .= '</p>';
-        }
-    }
-    echo $term_list;
-}
+    $yhtmaara = 0;
 ?>
-</div>
-</div>
+    <table id="t-taulukko" class="row-border">
+        <thead>
+            <tr class="t-rivi">	
+                <th class="t-indeksit">Kurssi </th>
+                <th class="t-indeksit">Tenttejä </th>
+            </tr>
+        </thead>
+        <tbody>
 <?php
+    foreach ( $terms as $term ) {
+        $slug = esc_url( get_term_link( $term ) );
+        $kurssi = $term->name;
+        $maara = $term->count;
+        $yhtmaara = $yhtmaara + $maara;
+        echo '<tr class="item">';
+        echo '<td><a class="hvr-grow-custom-smaller" href="' . $slug . '">' . $kurssi . '</a></td>';
+        echo '<td> ' . $maara  . '</td>';
+        echo '</tr>';
+    }
+    echo '</tbody>';
+    echo '</table>';
+    echo 'Tenttiarkistossa on yhteensä ' . $yhtmaara . ' tenttiä';
+    echo '</div>';
+}
+
 /* travelify_after_main_container hook */
 do_action( 'travelify_after_main_container' );
 ?>

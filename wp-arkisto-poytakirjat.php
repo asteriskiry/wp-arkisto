@@ -95,6 +95,7 @@ function wpark_pk_register_taxonomy_vuosi() {
     );
 
     $args = array(
+        'public'                => false,
         'hierarchical'          => true,
         'labels'                => $labels,
         'show_ui'               => true,
@@ -136,6 +137,7 @@ function wpark_pk_register_taxonomy_tyyppi() {
     );
 
     $args = array(
+        'public'                => false,
         'hierarchical'          => true,
         'labels'                => $labels,
         'show_ui'               => true,
@@ -362,4 +364,23 @@ function wpark_pk_help_cb() {
 
 <?php 
 }
+
+/* Adminin listauksen dataa */
+
+function wpark_pk_columns( $columns ) {
+    $columns['kokouksen_pvm'] = 'Kokouksen päivämäärä';
+    return $columns;
+}
+
+add_filter( 'manage_edit-poytakirjat_columns', 'wpark_pk_columns' );
+
+function wpark_pk_populate_columns( $column ) {
+    if ( 'kokouksen_pvm' == $column ) {
+        $kok_pvm = esc_html( get_post_meta( get_the_ID(), 'pk_paivamaara', true ) );
+        echo $kok_pvm;
+    }
+}
+
+add_action( 'manage_posts_custom_column', 'wpark_pk_populate_columns' );
+
 
