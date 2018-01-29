@@ -5,6 +5,9 @@
 /* Kurssien sorttausta varten */
 
 jQuery(function ($)  {
+
+    $.fn.dataTable.moment( 'DD.MM.YYYY' );
+
     $('#t-taulukko').DataTable({
         "pageLength": 25,
         "language": {

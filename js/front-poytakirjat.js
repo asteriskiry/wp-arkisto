@@ -5,6 +5,9 @@
 /* Pöytäkirjojen sorttausta varten */
 
 jQuery(function ($)  {
+
+    $.fn.dataTable.moment( 'DD.MM.YYYY' );
+
     $('#pk-taulukko').DataTable({
         "pageLength": 25,
         "language": {

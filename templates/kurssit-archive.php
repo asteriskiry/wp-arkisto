@@ -3,16 +3,11 @@
 /**
  * Template Name: Kurssit-archive
  **/
-?>
 
-<?php get_header(); ?>
-
-<?php
-/* travelify_before_main_container hook */
-do_action( 'travelify_before_main_container' );
+get_header();
 
 echo '<div id="kurssit-archive">';
-//echo '<h1 class="customtitle">' . get_the_terms( $post->ID, 'kurssi' )[0]->name . '</h1>';
+echo '<h1 class="customtitle">' . get_the_terms( $post->ID, 'kurssi' )[0]->name . '</h1>';
 
 $args_by_year = array(
     'post_type' 		=> 'tentit',
@@ -44,7 +39,7 @@ while ( $pk_by_year->have_posts() ) : $pk_by_year->the_post();
     global $post;
     $title = get_the_title();
     $custom_pdf_data = get_post_meta($post->ID, 'custom_pdf_data');
-    /* Kommentoitu $slug sitä varten jos halutaan valikosta suoraan pdf-tiedostoon */
+    /* Kommentoitu $slug sitä varten jos halutaan valikosta suoraan liitteeseen */
     //$slug = $custom_pdf_data[0]['src'];
     $slug = get_permalink();
     $pm = get_post_meta( $post->ID, 't_paivamaara', true );
@@ -52,16 +47,16 @@ while ( $pk_by_year->have_posts() ) : $pk_by_year->the_post();
 
     /* HTML: dynaamiset kentät*/
     echo '<tr class="item">';
-    echo '<td><div class="tooltip"><a class="hvr-grow-custom-smaller" href="' . $slug . '">' . $title . ' <i class="fas fa-file-pdf" ></i></a><img class="tooltipimg" src="' . $thumbnail  . '"></div></td>';
+    echo '<td><div class="tooltip"><a class="hvr-grow-custom-smaller" href="' . $slug . '">' . $title . '</a><img class="tooltipimg" src="' . $thumbnail  . '"></div></td>';
     echo '<td> ' . $pm  . '</td>';
     echo '</tr>';
 endwhile;
 echo '</tbody>';
 echo '</table>';
+echo '<div class="t-k-buttons">';
+echo '<a href="' . get_site_url() . '/tenttiarkisto"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Takaisin selailuun</a>'; 
+echo '</div>';
+echo '</div>';
 endif;
 
-/* travelify_after_main_container hook */
-do_action( 'travelify_after_main_container' );
-?>
-
-<?php get_footer(); ?>
+get_footer();

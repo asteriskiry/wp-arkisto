@@ -3,20 +3,14 @@
 /**
  * Template Name: Tentit-archive
  **/
-?>
 
-<?php get_header(); ?>
-
-<?php
-/* travelify_before_main_container hook */
-do_action( 'travelify_before_main_container' );
+get_header();
 ?>
 
 <div id="tentit-archive">
     <h1 class="customtitle">Tenttiarkisto</h1>
 
 <?php
-
 $args = array( 'hide_empty=0' );
  
 $terms = get_terms( 'kurssi', $args );
@@ -49,8 +43,4 @@ if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
     echo '</div>';
 }
 
-/* travelify_after_main_container hook */
-do_action( 'travelify_after_main_container' );
-?>
-
-<?php get_footer(); ?>
+get_footer();

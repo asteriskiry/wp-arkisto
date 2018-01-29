@@ -3,26 +3,17 @@
 /**
  * Template Name: Pöytäkirjat-single
  **/
-?>
 
-<?php get_header(); ?>
-
-<?php
-/* travelify_before_main_container hook */
-do_action( 'travelify_before_main_container' );
+get_header();
 ?>
 
 <div class="tentit-single">
 <script>
 jQuery(function ($)  {
-
-            $(window).load(function() {
-
-                $('#loadOverlay').fadeOut('slow');
-
-            })
-
-        })
+    $(window).load(function() {
+        $('#loadOverlay').fadeOut('slow');
+    })
+})
 </script>
 <?php
 
@@ -51,15 +42,15 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
     echo '<div class="t-grid">';
     echo '<div class="t-thumb">';
     echo '<div class="btn26">';
-    echo '<img src="' . $thumbnail . '"><div class="ovrly"></div><div class="anim-buttons"><a class="fa fa-file-pdf-o" href="' . $pdfurl . '"></a></div>';
+    echo '<img src="' . $thumbnail . '"><div class="ovrly"></div><div class="anim-buttons"><a class="fa fa-paperclip" href="' . $pdfurl . '"></a></div>';
     echo '</div>';
     echo '</div>';
     echo '<div class="t-single-meta">';
     echo '<div class="t-buttons-left">';
-    echo previous_post_link('%link', '<i class="fa fa-angle-double-left"></i> Edellinen');
+    echo previous_post_link('%link', '<i class="fa fa-chevron-left"></i> Edellinen');
     echo '</div>';
     echo '<div class="t-buttons-right">';
-    echo next_post_link('%link', 'Seuraava <i class="fa fa-angle-double-right"></i>');
+    echo next_post_link('%link', 'Seuraava <i class="fa fa-chevron-right"></i>');
     echo '</div>';
     echo '<br>';
     echo '<div class="t-single-meta-content">';
@@ -70,19 +61,14 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
     echo '<td><strong>Päivämäärä</strong></td><td>' . $pm . '</td>';
     echo '</tr>';
     echo '</table>';
-    echo '<a class="hvr-grow"href="' . $pdfurl . '">PDF-tiedosto <i class="fa fa-file-pdf-o"></i></a>';
+    echo '<a class="hvr-grow"href="' . $pdfurl . '">Tiedostoon <i class="fa fa-paperclip"></i></a>';
     echo '</div>';
     echo '<div class="t-buttons">';
-    echo '<a href="' . get_site_url() . '/' . $post_type_slug . '">Takaisin selailuun</a>'; 
+    echo '<a href="' . get_site_url() . '/' . $post_type_slug . '"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Takaisin selailuun</a>'; 
     echo '</div>';
     echo '</div>';
     echo '</div>';
-endwhile; endif; ?>
-</div>
+    echo '</div>';
+endwhile; endif; 
 
-<?php
-/* travelify_after_main_container hook */
-do_action( 'travelify_after_main_container' );
-?>
-
-<?php get_footer(); ?>
+get_footer();

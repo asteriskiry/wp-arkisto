@@ -164,19 +164,24 @@ function wpark_pk_taxonomy_meta_box($post, $meta_box_properties) {
 ?>
 
 <div id="taxonomy-<?php echo $taxonomy; ?>" class="categorydiv">
-  <ul id="<?php echo $taxonomy; ?>-tabs" class="category-tabs">
+    <ul id="<?php echo $taxonomy; ?>-tabs" class="category-tabs">
     <li class="tabs"><a href="#<?php echo $taxonomy; ?>-all"><?php echo $tax->labels->all_items; ?></a></li>
-  </ul>
-
-  <div id="<?php echo $taxonomy; ?>-all" class="tabs-panel">
-    <input name="tax_input[<?php echo $taxonomy; ?>][]" value="0" type="hidden">            
-    <ul id="<?php echo $taxonomy; ?>checklist" data-wp-lists="list:symbol" class="categorychecklist form-no-clear">
-<?php   foreach($terms as $term){
-$id = $taxonomy.'-'.$term->term_id;?>
-      <li id="<?php echo $id?>"><label class="selectit"><input required value="<?php echo $term->term_id; ?>" name="tax_input[<?php echo $taxonomy; ?>][]" id="in-<?php echo $id; ?>"<?php if( $current === (int)$term->term_id ){?>checked="checked"<?php } ?> type="radio"> <?php echo $term->name; ?></label></li>
-<?php   }?>
     </ul>
-  </div>
+
+    <div id="<?php echo $taxonomy; ?>-all" class="tabs-panel">
+        <input name="tax_input[<?php echo $taxonomy; ?>][]" value="0" type="hidden">            
+        <ul id="<?php echo $taxonomy; ?>checklist" data-wp-lists="list:symbol" class="categorychecklist form-no-clear">
+
+<?php
+    foreach($terms as $term){
+    $id = $taxonomy.'-'.$term->term_id; ?>
+
+        <li id="<?php echo $id?>">
+        <label class="selectit"><input required value="<?php echo $term->term_id; ?>" name="tax_input[<?php echo $taxonomy; ?>][]" id="in-<?php echo $id; ?>"<?php if( $current === (int)$term->term_id ){?>checked="checked"<?php } ?> type="radio"> <?php echo $term->name; ?></label>
+        </li>
+<?php   } ?>
+        </ul>
+    </div>
 </div>
 <?php
 }
@@ -263,7 +268,7 @@ function wpark_pk_callback( $post ) {
 }
 
 function wpark_pk_help_callback( $post ) {
-    echo '<div class="meta-help">Jos et ole ihan varma mitä teet, katso <a href="' . admin_url( 'edit.php?post_type=poytakirjat&page=ohjeet' ) . '">ohjeet</a></div>';
+    echo '<div class="meta-help">Jos et ole ihan varma mitä teet, katso <a href="' . admin_url( 'edit.php?post_type=poytakirjat&page=pk-ohjeet' ) . '">ohjeet</a></div>';
 }
 
 /* Metatietojen tallennus */
@@ -348,13 +353,12 @@ function wpark_pk_help_cb() {
             <li>Valitse "Kokouksen päivämäärä" kentästä avautuvasta kalenterista kokouksen päivämäärä</li>
             <li>Valitse vuosi (jona kokous pidettiin) kategorisointia varten</li>
             <li>Valitse pöytäkirjan tyyppi (kts. kohta "Tyypeistä")</li>
-            <li>Valitse saako pöytäkirjaa kommentoida</li>
             <li>Paina "Julkaise"</li>
             <li>Valmista! Käy vielä tarkistamassa että lisäämäsi pöytäkirja näkyy oikein</li>
         </ol>
 
         <h3>Tyyppien ja vuosien hallinta</h3>
-        <p>Tyyppejä voi lisätä tarpeen mukaan Pöytäkirjat->Tyypit -valikosta. Vuosia vastaavasta. Ainoa täytettävä kenttä on "Nimi". Muita ei tarvitse täyttää. Nimen täyttämisen jälkeen paina "Lisää uusi Tyyppi/Vuosi"-näppäintä ja uusi vuosi/tyyppi on käytettävissä pöytäkirjan lisäyssivulla</p>
+        <p>Tyyppejä voi lisätä tarpeen mukaan Pöytäkirjat->Tyypit -valikosta. Vuosia vastaavasta. Ainoa täytettävä kenttä on "Nimi". Nimen täyttämisen jälkeen paina "Lisää uusi Tyyppi/Vuosi"-näppäintä ja uusi vuosi/tyyppi on käytettävissä pöytäkirjan lisäyssivulla</p>
 
         <h3>Tyypeistä</h3>
         <p>Hallituksen kokousten pöytäkirjojen tyyppi on "Hallitus"</p>

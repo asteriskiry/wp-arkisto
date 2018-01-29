@@ -11,14 +11,16 @@ input[type=search] {
     background-position: 5px 5px; 
     background-repeat: no-repeat;
     padding: 5px 5px 5px 30px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-    width: 60%
+    -webkit-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
+    width: 60%;
+    margin-bottom: 10px;
 }
 input[type=search]:focus {
-    box-shadow: 0px 0px 3px 2px #caffd5;
     width: 90%;
-    background-color: #d2fadf;
+    box-shadow: 0px 0px 2px rgba(0, 193, 97, .8);
+    border: 2px solid rgba(0, 193, 97, .5);
+    background-color: #f3f3d8;
 }
 
 /*************************
@@ -108,6 +110,54 @@ input[type=search]:focus {
 .tooltip:hover .tooltipimg {
     opacity: 0.8;
 }
+.t-k-buttons a {
+    padding: 0 20px 0 20px;
+    background-color: #2c8f43;
+    color: white;
+    font-weight: 300;
+    font-size: 15px;
+    text-decoration: none;
+    text-align: center;
+    line-height: 40px;
+    height: 40px;
+    margin: 0;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+
+}
+.t-k-buttons a:visited {
+    color: #666666;
+    color: white;
+}
+.t-k-buttons a:hover, .t-buttons a:focus {
+    background-color: #35a64f;
+    text-decoration: none;
+    border-color: #fec04e;
+    color: white;
+    outline: none;
+}
+.t-k-buttons a:active, .t-k-buttons.active, .t-k-buttons.is-active {
+    text-shadow: 0 1px 0 rgba(255, 0, 0, 0.3);
+    text-decoration: none;
+    border-color: #cfcfcf;
+    color: #1c5f2c;
+    background-color: #247c39;
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
 
 /************************
  *      Single-sivu     *
@@ -179,7 +229,6 @@ input[type=search]:focus {
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px transparent;
     padding-left: 2.2em;
-
 }
 .t-buttons a:visited {
     color: #666666;
@@ -203,7 +252,6 @@ input[type=search]:focus {
     -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
-
 .t-buttons-left {
     width: 50%;
     float: left;
@@ -260,31 +308,6 @@ input[type=search]:focus {
     -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
-
-/* Safari tuotti ongelmia joten nuolianimaatiot kommentoitu pois toistaiseksi
-
-.t-buttons-left a:before {
-    margin-top: -3px;
-    position: absolute;
-    left: 1em;
-    content: "\f100";
-    padding: 0 10px;
-    font-family: FontAwesome;
-    font-size: 20px;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-transition-duration: 0.1s;
-    transition-duration: 0.1s;
-    -webkit-transition-property: transform;
-    transition-property: transform;
-    -webkit-transition-timing-function: ease-out;
-    transition-timing-function: ease-out;
-}
-.t-buttons-left a:hover:before, .t-buttons-left a:focus:before, .t-buttons-left a:active:before {
-    -webkit-transform: translateX(-4px);
-    transform: translateX(-4px);
-}
-*/
 .t-buttons-right a {
     background-color: #2c8f43;
     color: white;
@@ -333,28 +356,3 @@ outline: none; }
     -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
-/*
-.t-buttons-right a:before {
-    margin-top: -3px;
-    content: "\f101";
-    position: absolute;
-    right: 1em;
-    padding: 0 10px;
-    font-family: FontAwesome;
-    font-size: 20px;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-transition-duration: 0.1s;
-    transition-duration: 0.1s;
-    -webkit-transition-property: transform;
-    transition-property: transform;
-    -webkit-transition-timing-function: ease-out;
-    transition-timing-function: ease-out;
-
-}
-.t-buttons-right a:hover:before, .t-buttons-right a:focus:before, .t-buttons-right a:active:before {
-    -webkit-transform: translateX(4px);
-    transform: translateX(4px);
-}
-*/
-

@@ -11,8 +11,7 @@ var hidden = document.getElementById( 'pdf-hidden' );
 var pdfUploader = wp.media({
     title: 'Valitse tentti',
     button: { text: 'Valitse' },
-    multiple: false,
-    library: { order: 'ASC', orderby: 'date', type: 'application/pdf' }
+    multiple: false
 });
 
 addButton.addEventListener( 'click', function() {

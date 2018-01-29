@@ -1,28 +1,20 @@
-<?php 
+<?php
 
 /**
  * Template Name: Pöytäkirjat-single
  **/
-?>
 
-<?php get_header(); ?>
+get_header();
 
-<?php
-/* travelify_before_main_container hook */
-do_action( 'travelify_before_main_container' );
 ?>
 
 <div class="pk-single">
 <script>
 jQuery(function ($)  {
-
-            $(window).load(function() {
-
-                $('#loadOverlay').fadeOut('slow');
-
-            })
-
-        })
+    $(window).load(function() {
+        $('#loadOverlay').fadeOut('slow');
+    })
+})
 </script>
 <?php
 
@@ -51,10 +43,10 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
     echo '</div>';
     echo '<div class="pk-single-meta">';
     echo '<div class="pk-buttons-left">';
-    echo previous_post_link('%link', '<i class="fa fa-angle-double-left"></i> Edellinen');
+    echo previous_post_link('%link', '<i class="fa fa-chevron-left"></i> Edellinen');
     echo '</div>';
     echo '<div class="pk-buttons-right">';
-    echo next_post_link('%link', 'Seuraava <i class="fa fa-angle-double-right"></i>');
+    echo next_post_link('%link', 'Seuraava <i class="fa fa-chevron-right"></i>');
     echo '</div>';
     echo '<br>';
     echo '<div class="pk-single-meta-content">';
@@ -72,16 +64,12 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
     echo '<a class="hvr-grow"href="' . $pdfurl . '">PDF-tiedosto <i class="fa fa-file-pdf-o"></i></a>';
     echo '</div>';
     echo '<div class="pk-buttons">';
-    echo '<a href="' . get_site_url() . '/' . get_post_type($post->ID) . '">Takaisin selailuun</a>'; 
+    echo '<a href="' . get_site_url() . '/' . get_post_type($post->ID) . '"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Takaisin selailuun</a>'; 
     echo '</div>';
     echo '</div>';
     echo '</div>';
-endwhile; endif; ?>
-</div>
+    echo '</div>';
 
-<?php
-/* travelify_after_main_container hook */
-do_action( 'travelify_after_main_container' );
-?>
+endwhile; endif; 
 
-<?php get_footer(); ?>
+get_footer();

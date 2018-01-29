@@ -3,13 +3,8 @@
 /**
  * Template Name: Pöytäkirjat-archive
  **/
-?>
 
-<?php get_header(); ?>
-
-<?php
-/* travelify_before_main_container hook */
-do_action( 'travelify_before_main_container' );
+get_header(); 
 ?>
 
 <div id="pk">
@@ -72,7 +67,6 @@ if ($args_by_year['tax_query'][0]['terms'] == '') {
         $c_pdf_data_recent = get_post_meta($recent["ID"], 'custom_pdf_data');
         $pvm_recent = get_post_meta($recent["ID"], 'pk_paivamaara', true);
         $tn = $c_pdf_data_recent[0]['tnMed'];
-        //echo '<div class="pk-recent">';
         echo '<div class="cptn11">';
 		echo '<img src="' . $tn . '"><div class="ovrly"><div class="cptn"><div><h3>' . $recent["post_title"] . '</h3><p>' . $pvm_recent . '</p></div><a class="fa fa-arrow-right" href="' . get_permalink($recent["ID"]) . '"></a></div></div></div>';
     }
@@ -88,7 +82,7 @@ if ( $pk_by_year-> have_posts() ) :
 
     /* HTML: taulukon staattiset kentät */
 
-    echo '<h1 class="customtitle">' . get_the_terms( $post->ID, 'vuosi' )[0]->name . '</h1>';
+    echo '<h1 class="customtitle">' . $args_by_year['tax_query'][0]['terms'] . '</h1>';
 ?>
     <table id="pk-taulukko" class="row-border">
         <thead>
@@ -118,8 +112,9 @@ while ( $pk_by_year->have_posts() ) : $pk_by_year->the_post();
     $thumbnail = $custom_pdf_data[0]['tnSmall']; 
 
     /* HTML: dynaamiset kentät*/
+
     echo '<tr class="item">';
-    echo '<td><div class="tooltip"><a class="hvr-grow" href="' . $slug . '">' . $title . ' <i class="fa fa-file-pdf-o" ></i></a><img class="tooltipimg" src="' . $thumbnail  . '"></div></td>';
+    echo '<td><div class="tooltip"><a class="hvr-grow" href="' . $slug . '">' . $title . '</a><img class="tooltipimg" src="' . $thumbnail  . '"></div></td>';
     echo '<td> ' . $jn  . '</td>';
     echo '<td> ' . $pm  . '</td>';
     echo '<td> ' . $tyyppi[0]->name  . '</td>';
@@ -129,12 +124,7 @@ echo '</tbody>';
 echo '</table>';
 endif;
 }
-?>
-</div>
-</div>
-<?php
-/* travelify_after_main_container hook */
-do_action( 'travelify_after_main_container' );
-?>
+echo '</div>';
+echo '</div>';
 
-<?php get_footer(); ?>
+get_footer();

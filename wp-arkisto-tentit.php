@@ -121,19 +121,22 @@ function wpark_t_taxonomy_meta_box($post, $meta_box_properties) {
 ?>
 
 <div id="taxonomy-<?php echo $taxonomy; ?>" class="categorydiv">
-  <ul id="<?php echo $taxonomy; ?>-tabs" class="category-tabs">
-    <li class="tabs"><a href="#<?php echo $taxonomy; ?>-all"><?php echo $tax->labels->all_items; ?></a></li>
-  </ul>
 
-  <div id="<?php echo $taxonomy; ?>-all" class="tabs-panel">
-    <input name="tax_input[<?php echo $taxonomy; ?>][]" value="0" type="hidden">            
-    <ul id="<?php echo $taxonomy; ?>checklist" data-wp-lists="list:symbol" class="categorychecklist form-no-clear">
-<?php   foreach($terms as $term){
-$id = $taxonomy.'-'.$term->term_id;?>
-      <li id="<?php echo $id?>"><label class="selectit"><input required value="<?php echo $term->term_id; ?>" name="tax_input[<?php echo $taxonomy; ?>][]" id="in-<?php echo $id; ?>"<?php if( $current === (int)$term->term_id ){?>checked="checked"<?php } ?> type="radio"> <?php echo $term->name; ?></label></li>
-<?php   }?>
-    </ul>
-  </div>
+    <input type="text" class="kurssihaku" id="kurssi-input" onkeyup="wparkFilter()" placeholder="Hae kurssia..">
+    <div id="<?php echo $taxonomy; ?>-all" class="tabs-panel">
+        <input name="tax_input[<?php echo $taxonomy; ?>][]" value="0" type="hidden">            
+        <ul id="<?php echo $taxonomy; ?>checklist" data-wp-lists="list:symbol" class="categorychecklist form-no-clear">
+
+<?php
+    foreach($terms as $term){
+    $id = $taxonomy.'-'.$term->term_id; ?>
+
+        <li id="<?php echo $id?>">
+        <label class="selectit"><input required value="<?php echo $term->term_id; ?>" name="tax_input[<?php echo $taxonomy; ?>][]" id="in-<?php echo $id; ?>"<?php if( $current === (int)$term->term_id ){?>checked="checked"<?php } ?> type="radio"><div class="taxitem"><?php echo $term->name; ?></div></label>
+        </li>
+<?php   } ?>
+        </ul>
+    </div>
 </div>
 <?php
 }
@@ -184,7 +187,7 @@ function wpark_t_callback( $post ) {
 }
 
 function wpark_t_help_callback( $post ) {
-    echo '<div class="meta-help">Jos et ole ihan varma mitä teet, katso <a href="' . admin_url( 'edit.php?post_type=tentit&page=ohjeet' ) . '">ohjeet</a></div>';
+    echo '<div class="meta-help">Jos et ole ihan varma mitä teet, katso <a href="' . admin_url( 'edit.php?post_type=tentit&page=t-ohjeet' ) . '">ohjeet</a></div>';
 }
 
 /* Metatietojen tallennus */
@@ -206,7 +209,7 @@ function wpark_t_meta_save( $post_id ) {
     $kurssi = get_the_terms( $post_id, 'kurssi' );
 
     if ( get_post_type() == 'tentit' ) {
-        $t_title['post_title'] = $kurssi[0]->name . ' ' . get_post_meta( $post_id, 't_paivamaara', true );
+        $t_title['post_title'] = $kurssi[0]->name . ' - ' . get_post_meta( $post_id, 't_paivamaara', true );
     }
 
     remove_action( 'save_post', 'wpark_t_meta_save' );
