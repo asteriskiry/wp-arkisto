@@ -20,7 +20,7 @@ function wparkFilter() {
 
     for (i = 0; i < li.length; i++) {
         div = li[i].getElementsByTagName("div")[0];
-        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        if (div.innerHTML.toUpperCase().indexOf(filter) > -1) {
             li[i].style.display = "";
         } else {
             li[i].style.display = "none";
