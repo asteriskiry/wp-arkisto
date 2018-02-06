@@ -25,4 +25,4 @@ Mene wp-content/plugins -hakemistoon
 ```
 git clone https://github.com/mjturt/wp-arkisto.git
 ```
-Plugin luo automaattisesti sivut example.com/tentit ja example.com/poytakirjat, mutta niille generoituu sisältöä vasta kun ensimmäisen pöytäkirjan/tentin lisätään
+Plugin luo automaattisesti sivut example.com/tentit ja example.com/poytakirjat, mutta niille generoituu sisältöä vasta kun ensimmäiset pöytäkirjat/tentit lisätään
