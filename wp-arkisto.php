@@ -74,3 +74,17 @@ function wpark_add_pages () {
 }
 
 add_action( 'admin_init', 'wpark_add_pages'  );
+
+/* Poistetaan listauksesta quick edit */
+
+function wpark_remove_quick_edit( $actions  ) {
+    global $typenow;
+    if ($typenow == 'poytakirjat' || $typenow == 'tentit') {
+        unset($actions['inline hide-if-no-js']);
+        return $actions;
+    } else {
+        return $actions;
+    }
+}
+
+add_filter('post_row_actions','wpark_remove_quick_edit',10,1);
