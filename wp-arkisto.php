@@ -4,8 +4,8 @@
  * Plugin Name: WP-Arkisto
  * Description: Työkalu dokumenttien hallintaan. Pöytäkirja- ja tenttiarkisto.
  * Plugin URI: https://asteriski.fi
- * Author: Asteriski www-toimikunta, Maks Turtiainen
- * Version: 1.1
+ * Author: Maks Turtiainen
+ * Version: 1.2
  * Author URI: https://asteriski.fi
  * License: BSD
  **/
