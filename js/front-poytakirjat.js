@@ -9,6 +9,7 @@ jQuery(function ($)  {
     $.fn.dataTable.moment( 'DD.MM.YYYY' );
 
     $('#pk-taulukko').DataTable({
+        "order": [[ 3, "desc"  ], [1, "asc"]],
         "pageLength": 25,
         "language": {
             "sProcessing":    "Käsitellään...",
