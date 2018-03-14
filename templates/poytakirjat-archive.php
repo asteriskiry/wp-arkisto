@@ -54,9 +54,26 @@ $args_recent = array(
     'post_type' => 'poytakirjat'
 );
 
-/* Jos vuotta ei valittu, generoidaan viimeisimmät  */
+/* Jos vuotta ei valittu, näytetään tämän vuoden pöytäkirjat  */
 
 if ($args_by_year['tax_query'][0]['terms'] == '') {
+
+$args_by_year = array(
+    'post_type' 		=> 'poytakirjat',
+    'posts_per_page'        => -1,
+    'tax_query' 		=> array(
+        array(
+            'taxonomy' => 'vuosi',
+            'field' => 'slug',
+            'terms' => date('Y'),
+        ),
+    ),
+);
+
+
+/*
+ * Vanha "viimeisimmät"-näkymä
+ *
 
 	$recent_posts = wp_get_recent_posts( $args_recent );
     echo '<h1 class="customtitle">Viimeisimmät</h1>';
@@ -72,16 +89,17 @@ if ($args_by_year['tax_query'][0]['terms'] == '') {
     }
 
 	wp_reset_query();
+ */
 
 /* Jos vuosi valitaan */
-
+ 
 } else {
 
+}
 $pk_by_year = new WP_Query( $args_by_year );
 if ( $pk_by_year-> have_posts() ) :
 
     /* HTML: taulukon staattiset kentät */
-
     echo '<h1 class="customtitle">' . $args_by_year['tax_query'][0]['terms'] . '</h1>';
 ?>
     <table id="pk-taulukko" class="row-border">
@@ -123,7 +141,6 @@ endwhile;
 echo '</tbody>';
 echo '</table>';
 endif;
-}
 echo '</div>';
 echo '</div>';
 
