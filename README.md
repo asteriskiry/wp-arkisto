@@ -1,6 +1,8 @@
 # WP-arkisto
 ### Wordpress-plugin pöytäkirjojen ja tenttiarkiston hallintaan Asteriskin sivuille (Wordpress-plugin for managing documents)
 
+Plugin can seen in action at [asteriski.fi](http://asteriski.fi)
+
 To do
 -----------
 * Tenttiarkiston uploaderi ei-kirjautuneille käyttäjille
