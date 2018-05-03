@@ -6,7 +6,7 @@
  * Plugin URI: https://asteriski.fi
  * Author: Maks Turtiainen
  * Version: 1.2
- * Author URI: https://asteriski.fi
+ * Author URI: https://github.com/mjturt
  * License: BSD
  **/
 
