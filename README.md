@@ -5,6 +5,7 @@ Plugin can seen in action at [asteriski.fi](http://asteriski.fi)
 
 To do
 -----------
+* Tenttiarkisto ja pöytäkirja-arkisto eri plugareissa
 * Tenttiarkiston uploaderi ei-kirjautuneille käyttäjille
 
 Muuten valmis
@@ -25,6 +26,6 @@ Vähän ohjeita
 -----------
 Mene wp-content/plugins -hakemistoon
 ```
-git clone https://github.com/mjturt/wp-arkisto.git
+git clone https://github.com/asteriskiry/wp-arkisto.git
 ```
 Plugin luo automaattisesti sivut example.com/tentit ja example.com/poytakirjat, mutta niille generoituu sisältöä vasta kun ensimmäiset pöytäkirjat/tentit lisätään
