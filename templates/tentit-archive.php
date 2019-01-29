@@ -40,6 +40,14 @@ if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
     echo '</tbody>';
     echo '</table>';
     echo 'Tenttiarkistossa on yhteensä ' . $yhtmaara . ' tenttiä';
+
+    /* Väliaikainen kovakoodattu ohje */
+    echo '<p><h4>Miten lisätä uusi tentti tenttiarkistoon?</h4></p>
+    <p>Skannaa paperitentti tietokoneelle ja lähetä se .pdf-muodossa opintomateriaalivastaavalle. Voit käyttää yliopiston skannereita (löytyy esimerkiksi Agoran kellarikerroksesta ja 110-luokkien luota) ja lähettää sieltä suoraan mailitse. Opintomateriaalivastaava käy tämän jälkeen lisäämässä pikimmiten tentin tenttiarkistoon.</p>
+    <p>Opintomateriaalivastaava 2019<br>
+    Tiina Nokelainen<br>
+    tmknok [ät] utu.fi</p>';
+
     echo '</div>';
 }
 
